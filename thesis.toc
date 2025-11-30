@@ -1,1 +1,2 @@
-\contentsline {section}{\numberline {1}Introduction}{8}{}%
+\contentsline {chapter}{\numberline {1}Introduction}{8}{}%
+\contentsline {section}{\numberline {1.1}Background}{8}{}%

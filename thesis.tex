@@ -1,9 +1,15 @@
-\documentclass[12pt]{article}
+\documentclass[12pt]{report}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx, float}
 \usepackage[a4paper, margin=2.5cm]{geometry}
 \usepackage[skip=10pt plus1pt, indent=40pt]{parskip}
+\usepackage{tocloft}
 
+\renewcommand{\cftchapfont}{\bfseries}
+\renewcommand{\cftchappagefont}{\bfseries}
+\renewcommand{\cftchappresnum}{Chapter }
+\renewcommand{\cftchapaftersnum}{:}
+\renewcommand{\cftchapnumwidth}{6em}
 
 \graphicspath{{img/}}
 
@@ -86,7 +92,11 @@ Furthermore, the research establishes a framework for integrating emerging LLM c
 
 \newpage
 
-\section{Introduction}
+  \chapter{Introduction}
+  \section{Background}
+
+
+
 
 
 

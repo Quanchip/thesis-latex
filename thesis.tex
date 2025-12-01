@@ -4,12 +4,15 @@
 \usepackage[a4paper, margin=2.5cm]{geometry}
 \usepackage[skip=10pt plus1pt, indent=40pt]{parskip}
 \usepackage{tocloft}
+\usepackage{cite}
 
 \renewcommand{\cftchapfont}{\bfseries}
 \renewcommand{\cftchappagefont}{\bfseries}
 \renewcommand{\cftchappresnum}{Chapter }
 \renewcommand{\cftchapaftersnum}{:}
 \renewcommand{\cftchapnumwidth}{6em}
+
+\renewcommand{\baselinestretch}{1.5} 
 
 \graphicspath{{img/}}
 
@@ -28,8 +31,8 @@
 
 \begin{center}
     \textbf{\huge {Anomaly Detection in HDFS Logs}}
-    \textbf{\huge {using Machine Learning Integrated with 
-                LLM-Based Mitigation}}\\[50pt]
+    \textbf{\huge {using Machine Learning Integrated with
+            LLM-Based Mitigation}}\\[50pt]
 
     \textbf{By}\\
     \textbf{Nguyen Hoang Quan}\\[20pt]
@@ -42,9 +45,9 @@
 \newpage
 
 \begin{center}
-    \textbf{\Large{Anomaly Detection in HDFS Logs using Machine         Learning Integrated 
-    with LLM-Based Mitigation
-    }}\\[80pt]
+    \textbf{\Large{Anomaly Detection in HDFS Logs using Machine         Learning Integrated
+            with LLM-Based Mitigation
+        }}\\[80pt]
 
 \end{center}
 
@@ -61,8 +64,8 @@
 
 First and foremost, I would like to express my sincere gratitude to the School of Computer Science and Engineering for providing a supportive academic environment and the essential resources that made this thesis possible. \\[10pt]
 I am deeply thankful to my advisor, Dr. Le Hai Duong, for their invaluable guidance, encouragement, and constructive feedback throughout the development of this thesis. Their expertise and commitment have greatly enriched both my technical understanding and research direction. \\[10pt]
-I would also like to extend my appreciation to all lecturers and staff members who have contributed to my academic journey with their instruction, support, and mentorship. 
-Special thanks go to my family and friends for their constant support, motivation, and understanding during the preparation of this work. 
+I would also like to extend my appreciation to all lecturers and staff members who have contributed to my academic journey with their instruction, support, and mentorship.
+Special thanks go to my family and friends for their constant support, motivation, and understanding during the preparation of this work.
 Lastly, I would like to acknowledge the developers and the researchers behind the resources for providing the foundation upon which this project was built. \\[10pt]
 This thesis would not have been possible without the guidance, resources, and support from all of the above.
 
@@ -86,14 +89,31 @@ Anomaly detection is essential for managing today’s large-scale distributed sy
 
 In this research, I will propose a solution to addresses the fundamental challenge of automated log analysis. Specially, the research tackles three interconnected problems: (1) automated parsing of diverse log formats into structured templates, (2) anomaly detection in high-volume log streams, and (3) generation of contextual, actionable recommendations for identified issues.
 
-Previous research has established some foundational approaches including the algorithms for log parsing and machine learning techniques for anomaly detection. However, existing solutions typically focus on individual components rather than providing end-to-end integration. Most academic implementations lack production-ready deployment architectures, user-friendly interfaces, and the integration of modern Large Language Models (LLMs) for intelligent recommendations—creating a significant gap between theoretical algorithms and practical deployment. Therefore, this research is important since it close the gap between academic log analysis algorithms and production-ready systems. 
+Previous research has established some foundational approaches including the algorithms for log parsing and machine learning techniques for anomaly detection. However, existing solutions typically focus on individual components rather than providing end-to-end integration. Most academic implementations lack production-ready deployment architectures, user-friendly interfaces, and the integration of modern Large Language Models (LLMs) for intelligent recommendations—creating a significant gap between theoretical algorithms and practical deployment. Therefore, this research is important since it close the gap between academic log analysis algorithms and production-ready systems.
 
 Furthermore, the research establishes a framework for integrating emerging LLM capabilities into traditional system administration workflows, suggesting broader implications for AI-assisted DevOps practices. The findings indicate that intelligent automation of log analysis is not only technically feasible but can significantly enhance organizational capabilities in system reliability, security monitoring, and operational efficiency.
 
 \newpage
 
-  \chapter{Introduction}
-  \section{Background}
+\chapter{Introduction}
+\section{Background of the study}
+
+
+In modern software systems, log files serve as critical sources of information
+for system monitoring, debugging, troubleshooting, and security analysis. As applications or systems scale and increase its complexity,
+the volume of generated log data gets bigger exponentially. Therefore, traditional manual approaches
+for log analysis like manually examine through log files using basic tools such as grep or text
+editors, has become less efficient and more defective \cite{author2023}. As the result,
+it is becoming more difficult to detect anomalies within large scale system.
+
+Over the year, a lot of automated log-based methods have been introduced to help dectecting
+system anomalies. These approaches usually require raw log preprocessing techniques, feature extraction
+and machine-learning-based algorithms for processing vast amounts of
+unstructured log data efficiently, identifying potential issues before they
+escalate into critical failures. Recent advancements in natural language processing
+and large language models (LLMs) have also increased the potential for
+intelligent log analysis systems. However, despite these development, traditional machine-learning techniques and LLM-based approaches have yet to be efficiently integrated
+into a single, cohesive log analysis framework.
 
 
 
@@ -103,4 +123,11 @@ Furthermore, the research establishes a framework for integrating emerging LLM c
 
 
 
+
+
+
+
+
+\bibliographystyle{plain}
+\bibliography{references}
 \end{document}

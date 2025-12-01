@@ -1,0 +1,8 @@
+\begin{thebibliography}{1}
+
+\bibitem{author2023}
+John Doe and Jane Smith.
+\newblock Anomaly detection in distributed systems.
+\newblock {\em Journal of Computing}, 10:1--15, 2023.
+
+\end{thebibliography}

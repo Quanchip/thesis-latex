@@ -5,4 +5,11 @@ John Doe and Jane Smith.
 \newblock Anomaly detection in distributed systems.
 \newblock {\em Journal of Computing}, 10:1--15, 2023.
 
+\bibitem{SARHAN2024205}
+Mohanad Sarhan, Siamak Layeghy, Nour Moustafa, Marcus Gallagher, and Marius
+  Portmann.
+\newblock Feature extraction for machine learning-based intrusion detection in
+  iot networks.
+\newblock {\em Digital Communications and Networks}, 10(1):205--216, 2024.
+
 \end{thebibliography}

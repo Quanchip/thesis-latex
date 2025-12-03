@@ -5,6 +5,7 @@
 \usepackage[skip=10pt plus1pt, indent=40pt]{parskip}
 \usepackage{tocloft}
 \usepackage{cite}
+\usepackage{titlesec}
 
 \renewcommand{\cftchapfont}{\bfseries}
 \renewcommand{\cftchappagefont}{\bfseries}
@@ -12,21 +13,30 @@
 \renewcommand{\cftchapaftersnum}{:}
 \renewcommand{\cftchapnumwidth}{6em}
 
+\titleformat
+{\chapter} % command to format
+[block] % shape: hang, display, block, frame 
+{\bfseries\Large \centering}  % format of label + chapter title
+{CHAPTER\ \thechapter:} % label "Chapter 1:"
+{1.5ex} % separation label - chapter title
+{} % code before
+
 \renewcommand{\baselinestretch}{1.5} 
 
 \graphicspath{{img/}}
 
 \begin{document}
+\pagenumbering{roman}
 
 \begin{center}
     \textbf{VIETNAM NATIONAL UNIVERSITY OF HO CHI MINH CITY}\\[6pt]
     \textbf{INTERNATIONAL UNIVERSITY}\\[6pt]
-    \textbf{SCHOOL OF COMPUTER SCIENCE AND ENGINEERING}\\[80pt]
+    \textbf{SCHOOL OF COMPUTER SCIENCE AND ENGINEERING}\\[50pt]
 \end{center}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.3\textwidth]{iu-logo.png}\\[80pt]
+    \includegraphics[width=0.3\textwidth]{iu-logo.png}\\[50pt]
 \end{figure}
 
 \begin{center}
@@ -43,6 +53,16 @@
 \end{center}
 
 \newpage
+\newgeometry{
+  % Define the margin values:
+  left=1.5in,
+  right=1in,
+  top=1.5in,
+  bottom=1.5in,
+  % Optional: Define the paper size if you haven't already
+  % a4paper 
+}
+
 
 \begin{center}
     \textbf{\Large{Anomaly Detection in HDFS Logs using Machine         Learning Integrated
@@ -94,8 +114,10 @@ Previous research has established some foundational approaches including the alg
 Furthermore, the research establishes a framework for integrating emerging LLM capabilities into traditional system administration workflows, suggesting broader implications for AI-assisted DevOps practices. The findings indicate that intelligent automation of log analysis is not only technically feasible but can significantly enhance organizational capabilities in system reliability, security monitoring, and operational efficiency.
 
 \newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
 
-\chapter{Introduction}
+\chapter{INTRODUCTION}
 \section{Background of the study}
 
 
@@ -158,6 +180,32 @@ models (LLMs) to automate and improve anomaly detection in real-world scenario.
 
 \section{Limitations of the Study}
 
+
+\chapter{LITERATURE REVIEW}
+
+\section{An introduction to system log}
+\section{Traditional log analysis method}
+\section{Machine learning and deep learning for log anomaly detection}
+- ml techniques: https://arxiv.org/pdf/2307.16714
+
+\section{Large Language Models (LLMs) in Log Analysis}
+
+\chapter{METHODOLOGIES}
+This chapter presents the methodology used to develop and evaluate the proposed log anomaly detection framework, including data preparation, model design, 
+integration of large language models, and evaluation metrics.
+
+\section{Overview}
+\section{Dataset preparation}
+\section{Feature Extraction / Representation}
+\section{Anomaly Detection Models}
+\section{LLM Integration Method}
+\section{Implementation Details}
+
+
+
+
+\chapter{IMPLEMETATIONS}
+\chapter{CONCLUSION AND RECOMMENDATION}
 
 
 

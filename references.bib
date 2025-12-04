@@ -19,7 +19,7 @@
   author   = {Mohanad Sarhan and Siamak Layeghy and Nour Moustafa and Marcus Gallagher and Marius Portmann},
   keywords = {Feature extraction, Machine learning, Network intrusion detection system, IoT},
   abstract = {A large number of network security breaches in IoT networks have demonstrated the unreliability of current Network Intrusion Detection Systems (NIDSs). Consequently, network interruptions and loss of sensitive data have occurred, which led to an active research area for improving NIDS technologies. In an analysis of related works, it was observed that most researchers aim to obtain better classification results by using a set of untried combinations of Feature Reduction (FR) and Machine Learning (ML) techniques on NIDS datasets. However, these datasets are different in feature sets, attack types, and network design. Therefore, this paper aims to discover whether these techniques can be generalised across various datasets. Six ML models are utilised: a Deep Feed Forward (DFF), Convolutional Neural Network (CNN), Recurrent Neural Network (RNN), Decision Tree (DT), Logistic Regression (LR), and Naive Bayes (NB). The accuracy of three Feature Extraction (FE) algorithms is detected; Principal Component Analysis (PCA), Auto-encoder (AE), and Linear Discriminant Analysis (LDA), are evaluated using three benchmark datasets: UNSW-NB15, ToN-IoT and CSE-CIC-IDS2018. Although PCA and AE algorithms have been widely used, the determination of their optimal number of extracted dimensions has been overlooked. The results indicate that no clear FE method or ML model can achieve the best scores for all datasets. The optimal number of extracted dimensions has been identified for each dataset, and LDA degrades the performance of the ML models on two datasets. The variance is used to analyse the extracted dimensions of LDA and PCA. Finally, this paper concludes that the choice of datasets significantly alters the performance of the applied techniques. We believe that a universal (benchmark) feature set is needed to facilitate further advancement and progress of research in this field.}
-}
+},
 
 @article{STUDIAWAN20191,
   title    = {A survey on forensic investigation of operating system logs},
@@ -33,4 +33,31 @@
   author   = {Hudan Studiawan and Ferdous Sohel and Christian Payne},
   keywords = {Operating system logs, Event logs, Log forensics, Log tamper detection, Event correlation, Event reconstruction, Event anomaly},
   abstract = {Event logs are one of the most important sources of digital evidence for forensic investigation because they record essential activities on the system. In this paper, we present a comprehensive literature survey of the forensic analysis on operating system logs. We present a taxonomy of various techniques used in this area. Additionally, we discuss the tools that support the examination of the event logs. This survey also gives a review of the publicly available datasets that are used in operating system log forensics research. Finally, we suggest potential future directions on the topic of operating system log forensics.}
+},
+
+@ARTICLE{6410318,
+  author={Mi, Haibo and Wang, Huaimin and Zhou, Yangfan and Lyu, Michael Rung-Tsong and Cai, Hua},
+  journal={IEEE Transactions on Parallel and Distributed Systems}, 
+  title={Toward Fine-Grained, Unsupervised, Scalable Performance Diagnosis for Production Cloud Computing Systems}, 
+  year={2013},
+  volume={24},
+  number={6},
+  pages={1245-1255},
+  keywords={Production;Cloud computing;Electronic mail;Synchronization;Time factors;Data collection;Clocks;Cloud computing;performance diagnosis;request tracing},
+  doi={10.1109/TPDS.2013.21}},
+
+@misc{logstash_grok,
+  title        = {Logstash Grok Filter Documentation},
+  author       = {{Elastic}},
+  year         = {2024},
+  howpublished = {\url{https://www.elastic.co/guide/en/logstash/current/plugins-filters-grok.html}},
+  note         = {Accessed: 2025-01-10}
+},
+
+@misc{splunk_field_extraction,
+  title        = {Using the Field Extractor},
+  author       = {{Splunk Inc.}},
+  year         = {2024},
+  howpublished = {\url{https://docs.splunk.com/Documentation/Splunk/latest/Knowledge/Extractfields}},
+  note         = {Accessed: 2025-01-10}
 }

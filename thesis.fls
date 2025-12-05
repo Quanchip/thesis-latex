@@ -1,9 +1,9 @@
-PWD /root/thesis-latex
+PWD /home/gqy9hc/IU/thesis/thesis-latex
 INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
-INPUT /root/thesis-latex/thesis.tex
+INPUT /home/gqy9hc/IU/thesis/thesis-latex/thesis.tex
 OUTPUT thesis.log
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/report.cls
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/report.cls

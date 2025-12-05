@@ -228,31 +228,31 @@ centrally stored and appropriately maintained  to enable accurate monitoring, tr
 Traditional log analysis have relied on two primary approaches (cite something): manual log inspection and rule-based pattern matching systems.
 While these techniques are the foundation of the system administrators fields and troubleshooting, it were used during the time
 when the system complexity and log volumes were much smaller than nowadays modern systems. Understanding the strengths and limitations of
-these approaches will provide you a better context and insights of logs which will enhance your log analysis systems. 
+these approaches will provide you a better context and insights of logs which will enhance your log analysis systems.
 
 
 \subsection{Manual Log Inspection}
 
 Manual log inspection is one of the earliest and most straightforward methods used by system
-administrators to identify issues. In this approach, developers or administrators will 
+administrators to identify issues. In this approach, developers or administrators will
 directly operate searching on raw log files using command-line tools such as \verb|grep| , \verb|tail|, \verb|less|,
 to locate error logs or correlate timestamp of the incidents. While feasible for small log volumes, this method is very
-time-consuming, highly error-prone and relies heavily on an operator’s familiarity with the system. Therefore, this approach 
-is no longer a feasible solution for detecting anomalies in large-scale systems which may produce millions of log entries 
-per hour. For instance, in 2013 the Alibaba Cloud system was reported to generate approximately 100 to 
+time-consuming, highly error-prone and relies heavily on an operator’s familiarity with the system. Therefore, this approach
+is no longer a feasible solution for detecting anomalies in large-scale systems which may produce millions of log entries
+per hour. For instance, in 2013 the Alibaba Cloud system was reported to generate approximately 100 to
 200 million log lines in one hour \citep{6410318}.
 
 \subsection{Rule-Based Systems (Regex and Pattern Matching)}
 
-To counter the limitations of manual log review, developers created rule-based system that used fixed rules, regular expressions (regex), 
+To counter the limitations of manual log review, developers created rule-based system that used fixed rules, regular expressions (regex),
 and predefined patterns to filter, parse, and identify specific events when a specification conditions are met.
 For example, system operators can create rules to detect keywords such as "ERROR", "FAILED" or extract key information
-from log entries. Rule-based methods offer some advantages: they are easy to implement and effective for detecting 
-obvious or recurring errors. Many traditional monitoring tools such as Nagios, Splunk (early versions) 
-\cite{splunk_field_extraction}, and Logstash \cite{logstash_grok}, 
-they are heavily depend on popular pattern-matching techniques to filter, categorize, and index log data. 
+from log entries. Rule-based methods offer some advantages: they are easy to implement and effective for detecting
+obvious or recurring errors. Many traditional monitoring tools such as Nagios, Splunk (early versions)
+\cite{splunk_field_extraction}, and Logstash \cite{logstash_grok},
+they are heavily depend on popular pattern-matching techniques to filter, categorize, and index log data.
 
-However, the effectiveness of rule-based approaches highly depend on the completeness and accuracy of the 
+However, the effectiveness of rule-based approaches highly depend on the completeness and accuracy of the
 hand-crafted predefined rules. It will become more defective in a constantly evolving environments where logs
 format change frequently and new types of anomalies will appear which do not match the existing patterns. Maintaining
 large sets of regex rules is also a labor-intensive action and require continuous manual updates on patterns which is
@@ -262,6 +262,11 @@ unsuitable for adaptive anomaly detection.
 
 
 \section{Machine learning and deep learning for log anomaly detection}
+
+As system continuously scaled and logs volumes grew bigger, manual or rule-based approaches is
+no longer available. As a result, researchers began to adopt machine learning to automate
+anomoly detection.
+
 - ml techniques: https://arxiv.org/pdf/2307.16714
 
 \section{Large Language Models (LLMs) in Log Analysis}

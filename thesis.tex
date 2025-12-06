@@ -10,6 +10,7 @@
 \usepackage{natbib}
 \usepackage{url}
 \usepackage{hyperref}
+\usepackage{enumitem}
 
 \renewcommand{\cftchapfont}{\bfseries}
 \renewcommand{\cftchappagefont}{\bfseries}
@@ -260,12 +261,38 @@ unsuitable for adaptive anomaly detection.
 
 
 
+\section{Log parsing}
+
 
 \section{Machine learning and deep learning for log anomaly detection}
 
 As system continuously scaled and logs volumes grew bigger, manual or rule-based approaches is
 no longer available. As a result, researchers began to adopt machine learning to automate
-anomoly detection.
+anomoly detection. These methods are created to enable it to learn the structures, numerical representations,
+and patterns of logs without depending on predefined rules or templates. These approches are often categorized as
+supervised or unsupervised learning.
+
+\subsection{Supervised learning}
+
+\begin{enumerate}[label=\alph*.] % Sets the label format to (a), (b), (c)...
+    \item Support Vector Machine (SVM)
+
+          SVM is one of he
+
+    \item Random Forest (RF)
+    \item The final item summarizes the topic.
+\end{enumerate}
+
+\subsection{Unsupervised learning}
+
+\begin{enumerate}[label=\alph*.] % Sets the label format to (a), (b), (c)...
+    \item K-means
+
+
+    \item DBSCAN
+\end{enumerate}
+
+
 
 - ml techniques: https://arxiv.org/pdf/2307.16714
 

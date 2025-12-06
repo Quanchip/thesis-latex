@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.12.1)  5 DEC 2025 17:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.12.1)  6 DEC 2025 10:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -250,48 +250,56 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 286.
 )
 \Hy@SectionHShift=\skip87
+) (/usr/share/texlive/texmf-dist/tex/latex/enumitem/enumitem.sty
+Package: enumitem 2019/06/20 v3.9 Customized lists
+\labelindent=\skip88
+\enit@outerparindent=\dimen158
+\enit@toks=\toks23
+\enit@inbox=\box53
+\enit@count@id=\count278
+\enitdp@description=\count279
 )
-LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 32.
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 33.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 ) (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count278
-\l__pdf_internal_box=\box53
+\l__color_backend_stack_int=\count280
+\l__pdf_internal_box=\box54
 ) (./thesis.aux)
 \openout1 = `thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
  (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count279
-\scratchdimen=\dimen158
-\scratchbox=\box54
-\nofMPsegments=\count280
-\nofMParguments=\count281
-\everyMPshowfont=\toks23
-\MPscratchCnt=\count282
-\MPscratchDim=\dimen159
-\MPnumerator=\count283
-\makeMPintoPDFobject=\count284
-\everyMPtoPDFconversion=\toks24
+\scratchcounter=\count281
+\scratchdimen=\dimen159
+\scratchbox=\box55
+\nofMPsegments=\count282
+\nofMParguments=\count283
+\everyMPshowfont=\toks24
+\MPscratchCnt=\count284
+\MPscratchDim=\dimen160
+\MPnumerator=\count285
+\makeMPintoPDFobject=\count286
+\everyMPtoPDFconversion=\toks25
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
@@ -332,7 +340,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 32.
+Package hyperref Info: Link coloring OFF on input line 33.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
@@ -340,19 +348,19 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count285
+\c@section@level=\count287
 )
-LaTeX Info: Redefining \ref on input line 32.
-LaTeX Info: Redefining \pageref on input line 32.
-LaTeX Info: Redefining \nameref on input line 32.
+LaTeX Info: Redefining \ref on input line 33.
+LaTeX Info: Redefining \pageref on input line 33.
+LaTeX Info: Redefining \nameref on input line 33.
  (./thesis.out) (./thesis.out)
 \@outlinefile=\write3
 \openout3 = `thesis.out'.
 
-<img//iu-logo.png, id=88, 152.7306pt x 142.131pt>
+<img//iu-logo.png, id=100, 152.7306pt x 142.131pt>
 File: img//iu-logo.png Graphic file (type png)
 <use img//iu-logo.png>
-Package pdftex.def Info: img//iu-logo.png  used on input line 43.
+Package pdftex.def Info: img//iu-logo.png  used on input line 44.
 (pdftex.def)             Requested size: 136.57462pt x 127.10558pt.
  [1
 
@@ -398,11 +406,11 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 1.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 1.
-)
+ [4])
 \tf@toc=\write4
 \openout4 = `thesis.toc'.
 
- [4] [5] (./thesis.lot)
+ [5] (./thesis.lot)
 \tf@lot=\write5
 \openout5 = `thesis.lot'.
 
@@ -415,43 +423,43 @@ Chapter 1.
 [1
 
 ]
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 154.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 155.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [2] [3]
 Chapter 2.
 
-Underfull \hbox (badness 10000) in paragraph at lines 192--198
+Underfull \hbox (badness 10000) in paragraph at lines 193--199
 
  []
 
-<img//hdfs-log.png, id=173, 853.1875pt x 169.63374pt>
+<img//hdfs-log.png, id=188, 853.1875pt x 169.63374pt>
 File: img//hdfs-log.png Graphic file (type png)
 <use img//hdfs-log.png>
-Package pdftex.def Info: img//hdfs-log.png  used on input line 202.
+Package pdftex.def Info: img//hdfs-log.png  used on input line 203.
 (pdftex.def)             Requested size: 416.83289pt x 82.87794pt.
 [4
 
  <./img//hdfs-log.png>]
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 238.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 239.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 ) [5]
-Overfull \hbox (1.21896pt too wide) in paragraph at lines 264--264
+Overfull \hbox (1.21896pt too wide) in paragraph at lines 267--267
 |[]\OT1/ptm/b/n/17.28 Machine learn-ing and deep learn-ing for log anomaly
  []
 
-[6] [7]
+[6] [7] [8]
 Chapter 3.
-[8
-
-]
-Chapter 4.
 [9
 
 ]
+Chapter 4.
+[10
+
+]
 Chapter 5.
-(./thesis.bbl [10
+(./thesis.bbl [11
 
 ]
 Underfull \hbox (badness 1072) in paragraph at lines 9--15
@@ -473,25 +481,25 @@ Underfull \hbox (badness 10000) in paragraph at lines 31--37
 \OT1/pcr/m/n/12 Documentation / Splunk / latest / Knowledge / Extractfields$[]\OT1/ptm/m/n/12 ,
  []
 
-) [11
+) [12
 
 ] (./thesis.aux)
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 98772FC627EBF7A62154A87A8CD135A3;3919.
+(rerunfilecheck)             Checksum: 15AC99908C5476954E871658AD40783F;4362.
  ) 
 Here is how much of TeX's memory you used:
- 10341 strings out of 478287
- 160799 string characters out of 5849289
- 465087 words of memory out of 5000000
- 28340 multiletter control sequences out of 15000+600000
+ 10686 strings out of 478287
+ 166758 string characters out of 5849289
+ 473599 words of memory out of 5000000
+ 28672 multiletter control sequences out of 15000+600000
  484118 words of font info for 55 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,6n,63p,1231b,380s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,6n,63p,1231b,420s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on thesis.pdf (20 pages, 213106 bytes).
+Output written on thesis.pdf (21 pages, 214203 bytes).
 PDF statistics:
- 257 PDF objects out of 1000 (max. 8388607)
- 220 compressed objects within 3 object streams
- 50 named destinations out of 1000 (max. 500000)
- 179 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 282 PDF objects out of 1000 (max. 8388607)
+ 244 compressed objects within 3 object streams
+ 59 named destinations out of 1000 (max. 500000)
+ 203 words of extra memory for PDF output out of 10000 (max. 10000000)
 

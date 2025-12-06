@@ -13,12 +13,23 @@ John Doe and Jane Smith.
   2024.
 \newblock Accessed: 2025-01-10.
 
+\bibitem{7774521}
+Shilin He, Jieming Zhu, Pinjia He, and Michael~R. Lyu.
+\newblock Experience report: System log analysis for anomaly detection.
+\newblock In {\em 2016 IEEE 27th International Symposium on Software
+  Reliability Engineering (ISSRE)}, pages 207--218, 2016.
+
 \bibitem{6410318}
 Haibo Mi, Huaimin Wang, Yangfan Zhou, Michael Rung-Tsong Lyu, and Hua Cai.
 \newblock Toward fine-grained, unsupervised, scalable performance diagnosis for
   production cloud computing systems.
 \newblock {\em IEEE Transactions on Parallel and Distributed Systems},
   24(6):1245--1255, 2013.
+
+\bibitem{quinlan2014c4}
+J~Ross Quinlan.
+\newblock {\em C4. 5: programs for machine learning}.
+\newblock Elsevier, 2014.
 
 \bibitem{SARHAN2024205}
 Mohanad Sarhan, Siamak Layeghy, Nour Moustafa, Marcus Gallagher, and Marius
@@ -39,5 +50,10 @@ Mohanad Sarhan, Siamak Layeghy, Nour Moustafa, Marcus Gallagher, and Marius
 Hudan Studiawan, Ferdous Sohel, and Christian Payne.
 \newblock A survey on forensic investigation of operating system logs.
 \newblock {\em Digital Investigation}, 29:1--20, 2019.
+
+\bibitem{vapnik1998statistical}
+Vladimir Vapnik and Vlamimir Vapnik.
+\newblock Statistical learning theory wiley.
+\newblock {\em New York}, 1(624):2, 1998.
 
 \end{thebibliography}

@@ -1,9 +1,9 @@
-PWD /home/gqy9hc/IU/thesis/thesis-latex
+PWD /root/thesis-latex
 INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
-INPUT /home/gqy9hc/IU/thesis/thesis-latex/thesis.tex
+INPUT /root/thesis-latex/thesis.tex
 OUTPUT thesis.log
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/report.cls
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/report.cls
@@ -638,6 +638,11 @@ INPUT /usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/vf/adobe/courier/pcrr7t.vf
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/courier/pcrr8r.tfm
+INPUT ./img//svm.jpg
+INPUT ./img//svm.jpg
+INPUT img//svm.jpg
+INPUT ./img//svm.jpg
+INPUT ./img//svm.jpg
 INPUT ./thesis.bbl
 INPUT thesis.bbl
 INPUT ./thesis.bbl

@@ -1,0 +1,25 @@
+# ===== LaTeX build artifacts =====
+*.aux
+*.log
+*.toc
+*.out
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.nav
+*.snm
+*.vrb
+*.bcf
+*.run.xml
+
+# ===== Output =====
+*.pdf
+
+# ===== Editor / OS =====
+.vscode/
+.DS_Store
+Thumbs.db

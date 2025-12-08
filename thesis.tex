@@ -13,6 +13,7 @@
 \usepackage{enumitem}
 \usepackage{bookmark}
 
+
 \renewcommand{\cftchapfont}{\bfseries}
 \renewcommand{\cftchappagefont}{\bfseries}
 \renewcommand{\cftchappresnum}{Chapter }
@@ -278,48 +279,48 @@ supervised or unsupervised learning.
 \begin{enumerate}[label=\alph*.] % Sets the label format to (a), (b), (c)...
     \item Support Vector Machine (SVM)
 
-    Support Vector Machine is one of the fundamental methods that proposed
-    by Vapnik \cite{vapnik1998statistical} which is used for binary classification.
-    The basic idea of this method is as follow. For nonlinear separable data, we
-    can transform it to higher-dimensional space where the data becomes linearly separable.
-    This allows the classifier to construct an optimal separating hyperplane between normal 
-    and anomalous log patterns. In log detection context, anomaly logs will be treated as negatives
-    and normal one will be served as positive examples. But using this method for detecting 
-    anomalies often often suffers from class imbalance, where the positive examples is outnumber 
-    the negatives. As the result, the classifier will overfit the anomalous logs, which make 
-    it become weak in detecting new occur, unseen logs.
-    
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.7\textwidth]{svm.jpg}
-        \caption{SVM classification}
-        % \label{fig:my_image} % The label for cross-referencing
-    \end{figure}
+          Support Vector Machine is one of the fundamental methods that proposed
+          by Vapnik \cite{vapnik1998statistical} which is used for binary classification.
+          The basic idea of this method is as follow. For nonlinear separable data, we
+          can transform it to higher-dimensional space where the data becomes linearly separable.
+          This allows the classifier to construct an optimal separating hyperplane between normal
+          and anomalous log patterns. In log detection context, anomaly logs will be treated as negatives
+          and normal one will be served as positive examples. But using this method for detecting
+          anomalies often often suffers from class imbalance, where the positive examples is outnumber
+          the negatives. As the result, the classifier will overfit the anomalous logs, which make
+          it become weak in detecting new occur, unseen logs.
+
+          \begin{figure}[H]
+              \centering
+              \includegraphics[width=0.7\textwidth]{svm.jpg}
+              \caption{SVM classification}
+              % \label{fig:my_image} % The label for cross-referencing
+          \end{figure}
 
     \item Decision Tree (DS)
-    
-    Decision tree is one of the earliest machine learning approaches that apply to 
-    anomaly log detection and are defined by Quinlan \cite{quinlan2014c4} as "powerful
-    and common tools for classification and prediction". This method recursively 
-    splitting data based on its features then create a tree-like structure where
-    each leaf node represents a prediction class (normal or abnormal). 
-    When apply to log anomaly detection, we have to transform log entries into
-    structured numerical features before feed it into decision tree algorithm.
-    The applications of decision trees to log-based anomaly detection has been 
-    proposed in many research with promising results. He et al. \cite{7774521}
-    did some experiments with anomaly logs in HDFS dataset using decision tree classifier and 
-    and prove the effectiveness of it. The approach not only achieve high accuracy 
-    but also provide interpretable rules that allows others to validate and refine
-    them as they wish. 
-    In context of this research, decision tree served as a foundation machine 
-    learning algorithm for detecting anomalies in log data. The specific implementations
-    and results of using this algorithm will be discussed more upon in subsequent sections.
 
-    % \begin{enumerate}[label=\arabic*.]
-    %     \item The first item in the list.
-    %     \item The second item in the list.
-    %     \item The third item in the list.
-    % \end{enumerate}
+          Decision tree is one of the earliest machine learning approaches that apply to
+          anomaly log detection and are defined by Quinlan \cite{quinlan2014c4} as "powerful
+          and common tools for classification and prediction". This method recursively
+          splitting data based on its features then create a tree-like structure where
+          each leaf node represents a prediction class (normal or abnormal).
+          When apply to log anomaly detection, we have to transform log entries into
+          structured numerical features before feed it into decision tree algorithm.
+          The applications of decision trees to log-based anomaly detection has been
+          proposed in many research with promising results. He et al. \cite{7774521}
+          did some experiments with anomaly logs in HDFS dataset using decision tree classifier and
+          and prove the effectiveness of it. The approach not only achieve high accuracy
+          but also provide interpretable rules that allows others to validate and refine
+          them as they wish.
+          In context of this research, decision tree served as a foundation machine
+          learning algorithm for detecting anomalies in log data. The specific implementations
+          and results of using this algorithm will be discussed more upon in subsequent sections.
+
+          % \begin{enumerate}[label=\arabic*.]
+          %     \item The first item in the list.
+          %     \item The second item in the list.
+          %     \item The third item in the list.
+          % \end{enumerate}
 
 
 
@@ -328,14 +329,41 @@ supervised or unsupervised learning.
 
 \subsection{Unsupervised learning}
 
+In many situation when anomaly data is not labeled or unavailable, the supervised
+learning is thereby become impractical. As a result, unsupervised learing methods
+have been adopted widely for log anomaly detection. These approaches aim to analyze
+data without requiring labeled examples by discovering the characteristics of the
+data itseft. This section will examine some popular unsupervised approaches that are
+currently applied to log analysis.
+
 \begin{enumerate}[label=\alph*.] % Sets the label format to (a), (b), (c)...
-    \item K-means
 
+    \item Isolation Forrest
 
-    \item DBSCAN
+          Isolation Forrest is a machine learning algorithm that was introduced by Liu et al
+          \cite{liu2012isolation} in 2012. His core principle of isolation forrest is that
+          anomolies are more accessible to isolate than abnomalous points \cite{Longberg2024}.
+          The algorithms will construct forrest of random binary trees to separate each
+          data point. Each tree us built by randomly selecting a feature from the dataset
+          and a split value within the feature's range, then repetitive split the
+          data until it reach the maximum depth or the instance is isolated.
+
+          \begin{figure}[H]
+              \centering
+              \includegraphics[width=1\textwidth]{isolation-forrest.png}
+              \caption{Isolation Forest}
+              % \label{fig:my_image} % The label for cross-referencing
+          \end{figure}
+
+          Figure 2.3 demonstrates the isolation capabilities of Isolation Forest algorithm.
+          In the left, the data point is seperated with only one split, indicating a high anomaly score.
+          On the other hand, data point on the right requires more splits,  suggesting it’s a
+          nominal data point
+    \item Principal Component Analysis (PCA)
+
+    \item Clustering
+
 \end{enumerate}
-
-
 
 - ml techniques: https://arxiv.org/pdf/2307.16714
 

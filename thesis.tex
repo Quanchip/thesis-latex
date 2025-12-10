@@ -12,6 +12,7 @@
 \usepackage{hyperref}
 \usepackage{enumitem}
 \usepackage{bookmark}
+\usepackage{enumitem}
 
 
 \renewcommand{\cftchapfont}{\bfseries}
@@ -459,12 +460,105 @@ root casues and useful suggestions. \\[10pt]
 This section presents the system architecture and design of the proposed log anomaly detection framework.
 We will focus on the structural composition of the system and also show their responsibilities, and interactions.
 The architecture is desgined to make the process of large-scale log data more efficiently while enabling to
-integrate with traditional anomaly detection techniques and large language models (LLMs). The overall design
-em
+integrate with traditional anomaly detection techniques and large language models (LLMs).
+
+\subsection{Architectural Overview and Design Principles}
+
+The proposed log analysis system follows a simple architecture but highlight the
+practicality and ease of integration to support real-world problems. The systems is desgined around some
+key principles:
+
+
+\begin{enumerate}[label=\arabic*.]
+    \item Asynchronous Processing
+
+          The architecture apply asynchronous task processing to handle computationally heavy workload without
+          affect user interface. Therefore the system can effective process large log files while also maintain
+          good user interaction.
+
+    \item Modular Service Design
+
+          Each component in the system is desgined as an independent module with clear responsibilities to maintain or test
+          more easily, and also increase the ability of horizontally scaling of individual components.
+
+    \item Data Layer Separation
+
+          The system create a clear seperation between metadata management and object storage that using
+          MinIO for large-scale objects and PostgreSQL for logs structured metadata. This design optimizes
+          the performace by addressing the data access pattern problem where PostgreSQL is suitable for
+          structured queries and indexing whereas MinIO offer hight throughput and cost efficiency for
+          actual log storage.
+
+    \item Multi-Stage Processing Pipeline
+
+          In my log analysis system, I implemented a multi-stage pipeline which consists of parsing, anomaly detection,
+          and intelligent analysis phases. This allows me to test and integrate different algorithms and models
+          that is the most suitable for the system without disrupting the entire workflow.
+
+\end{enumerate}
+
+\subsection{High-Level System Architecture}
+
+The system uses a layered, distributed architecture which is desgined to support efficient log ingestion and
+anomaly detection. Each layer is responsible for a distinct functionality ensuring the ease for development
+and maintainance.
+
+\begin{enumerate}[label=\arabic*.]
+
+    \item Presentation layer
+
+          This layer provides a user-friendly interface between end users and the log analysis system. It is a
+          single-page application (SPA) that built on React framework, allowing users to upload
+          log files, view processing status and final analyzed results. The system also develop
+          authentication through JWT-based mechanism and role-based accesses for better security.
+
+    \item API Gateway Layer
+
+          The API gateway layer is responsible for create a communication between the frontend and backend.
+          This layer expose REST API endpoints which will handle request routing, input validation and give back the
+          responses by using FastAPI technologies.
+
+    \item Service Layer
+
+          The service layer hold the core business logic of the system. These services
+          include authentication, handling log files, and managing model detection logic.
+          and LLMs analysis.
+          By seperating functions into discreate services, the architecture allows each service to
+          work independently and easy to change as you wish.
+
+    \item Data Processing Layer
+
+          Data processing is one of the most important steps in the entire workflow, so this layer
+          is built very carefully. Raw log messages are parsed into structured one and extract event
+          templates using Drain algorithm. Then using the structured logs to ingest to machine learning models
+          and save as serialized file for real-time inference. Anomalies is then analyzed by LLMs
+          to generate explanations about how it mark as anomaly and mitigation suggestions.
+
+    \item Storage Layer
+
+          The storage layer is designed to handle how log data will be stored and accessed effectively.
+          MinIO is used to store actual raw log files that users upload to the server.
+          I utilized this technology because its object storage allows storing and access large volume
+          of data with high speed and low cost. Whereas PostgreSQL is chosen to manage structured metadata
+          due to its ability to create complex structured queries. An in-memory cache (Redis) is also
+          employed in this system to support fast access to data such as task queues.
+
+
+    \item Task Management Layer
+
+          To support asynchronous processing as I mentionen in section 3.2.1, the system also create a
+          layer for task management. Each step such as parsing, anomaly detection, and LLM inference will
+          be define as tasks and put to message queues. Celery workers will take tasks from queue and execute
+          in the background, thereby parallel execution is made possible.
+
+\end{enumerate}
 
 
 
 \section{Dataset preparation}
+
+
+
 \section{Log Parsing Methodology}
 
 

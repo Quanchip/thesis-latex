@@ -13,6 +13,10 @@
 \usepackage{enumitem}
 \usepackage{bookmark}
 \usepackage{enumitem}
+\usepackage{pgfgantt}
+\usepackage{booktabs}
+\usepackage{array}
+
 
 
 \renewcommand{\cftchapfont}{\bfseries}
@@ -557,22 +561,22 @@ and maintenance.
 
 \section{Dataset preparation}
 
-The HDFS log data set is the most frequently used data set for anomaly detection methods and 
+The HDFS log data set is the most frequently used data set for anomaly detection methods and
 thus also the main focus point of this study. The logs were collected from the Hadoop Distributed
 File System (HDFS), which runs on the Amazon EC2 platform. This system is designed to run on
-commodity hardware and allows users to store and process large files. Each log event have one or more 
+commodity hardware and allows users to store and process large files. Each log event have one or more
 block identifiers which will enable grouping logs into sequence of events. And in fact, the sample
-logs snippet show in Figure \ref{fig:hdfs-log} are taken from HDFS data set. The core idea behind 
-the anomaly detection in this dataset is that some data blocks is fail to be processed by the 
+logs snippet show in Figure \ref{fig:hdfs-log} are taken from HDFS data set. The core idea behind
+the anomaly detection in this dataset is that some data blocks is fail to be processed by the
 system. When such failures happen, the blocks generate log events that differ from normal processing behavior.
 Therefore, the entire sequence should be detected as anomalous \cite{xu2009detecting}.
 
 The data was originally collected by Xu et al. from a production hadoop cluster comprising
-more than 200 nodes. The dataset was labeled by domain experts to distinguish normal 
+more than 200 nodes. The dataset was labeled by domain experts to distinguish normal
 and anomalous execution flows. In this study the HDFS dataset version is taken from project
- Loghub \cite{zhu2023loghub}. The total lines of log messages in this dataset version is 
- 11,175,629 but a close inspection of the dataset shows that approximately 22,000 lines are missing in comparison to the original data set for
-unknown reasons. However, the remaining data still provides a sufficient sample for 
+Loghub \cite{zhu2023loghub}. The total lines of log messages in this dataset version is
+11,175,629 but a close inspection of the dataset shows that approximately 22,000 lines are missing in comparison to the original data set for
+unknown reasons. However, the remaining data still provides a sufficient sample for
 anomaly detection analysis and techniques evaluation.
 
 
@@ -591,18 +595,272 @@ anomaly detection analysis and techniques evaluation.
 
 \chapter{IMPLEMETATIONS}
 \section{Implementation Overview}
+
+This chapter will present the implementation of the proposed log anomaly detection application. Each
+components that are described in chapter 3 will be transformed to real functional code and integrate
+in to the system. The scope of this chapter is focus on implementaion details including
+configuration, library used, API designs and technologies that are used to build
+end-to-end system.
+
+
+\section{Implementation timeline}
+
+The system implementaion is followed a structured timeline that consists of several
+phases and each phase will focus on a specific tasks and will be described as follow:
+
+
+
+\begin{itemize}
+    \item \textit{Phase 1 (Week 1)}
+
+          This initial phase focused on prepare and research background knownledge for the project. Some
+          major activities are:
+
+          \begin{itemize}
+
+              \item Creating a literature review about log parsing, anomaly detection techniques,
+                    and LLMs for log analysis.
+
+              \item Understanding about HDFS datatset, how it was generated, and its structure.
+
+              \item Defining sytem requirements and architecture.
+
+          \end{itemize}
+
+    \item \textit{Phase 2 (Week 2): Data Preparation}
+
+          In this phase, raw actual log will be collected, and prepared for use in subsequent steps.
+
+          \begin{itemize}
+
+              \item Downloading raw HDFS dataset from LogHub repository and validating data.
+
+              \item Using a small sample in the data set to understand the event structure.
+
+              \item Set up a directories just for data storage purposes.
+
+
+          \end{itemize}
+
+    \item \textit{Phase 3 (Week 3-5): Backend Infrastructure Setup}
+
+          The fundamental backend environment was set up carefully for later implementation:
+
+          \begin{itemize}
+
+              \item Setting up the FastAPI project structure, base routers, and middleware.
+
+              \item Configuring PostgreSQL database, Redis, and MinIO containers using Docker.
+
+              \item Designing database schema.
+
+          \end{itemize}
+
+
+    \item \textit{Phase 4 (Week 6-7): Log Parsing module development}
+
+          This phase mainly focused on implementing a wrapper for Drain parser in order to integrate into
+          the system, which includes some major steps:
+
+          \begin{itemize}
+
+              \item Developing a Python script to wrap the original Drain algorithm.
+
+              \item Creating Celery tasks for asynchronous parsing.
+
+              \item Designing storage solution for parsed logs (MinIO + PostgreSQL)
+
+          \end{itemize}
+
+
+    \item \textit{Phase 5 (Week 8-9): Log Parsing module development}
+
+          Some popular ML anomaly detection models were utilized and evaluated in this phase:
+
+          \begin{itemize}
+
+              \item Extracting event count vectors and features.
+
+              \item Training and validating models using parsed event sequences.
+
+              \item Storing trained models for reusing in the processing pipeline.
+
+          \end{itemize}
+
+
+    \item \textit{Phase 6 (Week 10-11): LLM Integration}
+
+          This phase focused on implementing LLM for more understanding of anomalies:
+
+          \begin{itemize}
+
+              \item Developing the LLM service module for interacting with the model API.
+
+              \item Structuring a prompt templates for explanation, and mitigation suggestions.
+
+              \item Integrating into the pipeline as the final stage.
+
+          \end{itemize}
+
+    \item \textit{Phase 7 (Week 12-13): Frontend Development}
+
+          A functional web interface is contructed and delivered in this phase using React technology:
+
+          \begin{itemize}
+
+              \item Developing the LLM service module for interacting with the model API.
+
+              \item Structuring a prompt templates for explanation, and mitigation suggestions.
+
+              \item Integrating into the pipeline as the final stage.
+
+          \end{itemize}
+
+    \item \textit{Phase 8 (Week 14): Testing, Optimization, and Debugging}
+
+          This phase performs several tests and optimization to ensure product stability:
+
+          \begin{itemize}
+
+              \item Optimizing database queries and model loading.
+
+              \item Refining UI responsiveness and user experience flow.
+
+              \item Running test with a full datasets to ensure all stages work smoothly.
+
+          \end{itemize}
+
+
+    \item \textit{Phase 9 (Week 15-16): Documentation and Thesis writing}
+
+          The final phase will consolidate all the work and prepare the system for thesis writing:
+
+          \begin{itemize}
+
+              \item Documenting code structure, APIs, preprocessing steps, and models.
+
+              \item Preparing visualizations, diagrams, and comparison tables.
+
+              \item Create overall structure for thesis and complete the final work.
+          \end{itemize}
+
+\end{itemize}
+
+
+
 \section{Backend Implementation}
+
+The backend of the log analysis system was developed using FastAPI due to its ease of use and high performance.
+The implementation follows the layered architechture that introduced in Chapter 3 and therefore separate the
+entire system into modular routers and components in order to maintain and scale more easily.
+
 \subsection{FastAPI Application Architecture}
-- Code snippets from src/main.py
-- Router organization
-- Dependency injection
-- Database session management
+
+\begin{enumerate}[label=\alph*.]
+
+    \item Application Initialization
+
+          The main application entry point is defined in `src/main.py`, where all routers and middlewares are registered.
+          The main application is also responsible for initializing CORS middleware and create all database
+          tables that defined in SQLAlchemy models whenever the application start. This setup system features like Auth, Jobs
+          Logs, to be managed by it own route files.
+
+
+          \begin{figure}[H]
+              \centering
+              \includegraphics[width=0.6\textwidth]{mainpy.png}
+              \caption{main.py file}
+              \label{fig:main.py}
+
+          \end{figure}
+
+
+    \item Router Organization \\[7pt]
+
+          \begin{table}[h]
+              \centering
+              % Sử dụng '|' để tạo đường kẻ dọc và '>{\ttfamily}l' cho phông chữ code
+              \begin{tabular}{|>{\ttfamily}l|l|}
+                  \hline
+                  \textbf{Router} & \textbf{Responsibilities}                      \\
+                  \hline
+                  auth\_router    & Login, registration, token generation          \\
+                  \hline
+                  log\_router     & File upload, metadata retrieval                \\
+                  \hline
+                  job\_router     & Job creation, status queries, result retrieval \\
+                  \hline
+                  ml\_router      & Model inference endpoints                      \\
+                  \hline
+                  llm\_router     & Explanation and mitigation generation          \\
+                  \hline
+              \end{tabular}
+              \caption{Router Responsibilities}
+              \label{tab:module_responsibilities_final}
+          \end{table}
+
+          Each domain in the system is seperated to different router to maintain the ability to
+          scale, be readable when number of features and endpoint grows. The table \ref{tab:module_responsibilities_final}
+          gives information about the total router that are implemented in the systems and their
+          responsibilities. Routers itself will only communicate with service layers to mainin a well
+          and clear application architecture.
+
+          \begin{figure}[H]
+              \centering
+              \includegraphics[width=1\textwidth]{router.png}
+              \caption{Example of a router configuration pattern}
+              \label{fig:router.py}
+          \end{figure}
+
+
+          Figure \ref{fig:router.py} captures a code snippet that represent a pattern used for
+          implementing router configuration. Each router will contain several endpoints that
+          directly relatect to that functional service layer. For example, the authentication
+          router includes enpoints for user creation, get login users or send access tokens.
+          This approach allows developers to organize the application better and avoid as much as
+          confusion in source code.
+
+
+
+
+\end{enumerate}
+% - Code snippets from src/main.py
+% - Router organization
+% - Dependency injection
+% - Database session management
+
 
 \subsection{Database Layer Implementation}
-- model diagram
-- detail
+
+The database layer was built based on PostgreSQL database with SQLAlchemy ORM which allows developers
+to interact with relational databases using Python classes and objects instead of using raw SQL queries.
+All entities in the system such as users, logs, jobs and analysis are represented as ORM models ann then
+mapped to relational database tables.
+
+\begin{enumerate}[label=\alph*.]
+
+    \item Database schema
+
+          \begin{figure}[H]
+              \centering
+              \includegraphics[width=1\textwidth]{schema.png}
+              \caption{System database schema}
+              \label{fig:database schema}
+          \end{figure}
+
+          Figure \ref{fig:database schema} depicts 4 core tables in the anomaly detection system.
+
+    \item Model implementation
+
+\end{enumerate}
+
+% fasdfasd
+% - model diagram
+% - detail
 
 \subsection{API Endpoints Implementation}
+
+
 
 
 \section{Log Processing Pipeline}

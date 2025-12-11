@@ -15,7 +15,7 @@
 \usepackage{enumitem}
 \usepackage{pgfgantt}
 \usepackage{booktabs}
-\usepackage{array}
+\usepackage{array, multirow}
 
 
 
@@ -780,7 +780,7 @@ entire system into modular routers and components in order to maintain and scale
           \begin{table}[h]
               \centering
               % Sử dụng '|' để tạo đường kẻ dọc và '>{\ttfamily}l' cho phông chữ code
-              \begin{tabular}{|>{\ttfamily}l|l|}
+              \begin{tabular}{|l|l|}
                   \hline
                   \textbf{Router} & \textbf{Responsibilities}                      \\
                   \hline
@@ -827,7 +827,7 @@ entire system into modular routers and components in order to maintain and scale
 % - Code snippets from src/main.py
 % - Router organization
 % - Dependency injection
-% - Database session management
+% - Database session managementPhase 
 
 
 \subsection{Database Layer Implementation}
@@ -845,13 +845,58 @@ mapped to relational database tables.
               \centering
               \includegraphics[width=1\textwidth]{schema.png}
               \caption{System database schema}
-              \label{fig:database schema}
+              \label{fig:database_schema}
           \end{figure}
 
-          Figure \ref{fig:database schema} depicts 4 core tables in the anomaly detection system.
+          Figure \ref{fig:database_schema} depicts 4 core tables in the anomaly detection system, including \texttt{users},
+          \texttt{log\_files}, \texttt{processing\_jobs} and \texttt{analysis\_results}. Each table serves a distinct pupose
+          and are described as follow:
+
+
+          \begin{itemize}
+
+              \item Table users: This table will manage users information such as user name, password,
+                    email adress and their role in the system.
+
+              \item Table log\_files: This table stores metadata of a log file that uploaded by users,
+                    and there will be a link to its actual storage location in MinIO.
+
+              \item Table processing\_jobs: This table is primarily used for storing jobs information that
+                    create by the system to track the Celery background tasks.
+
+              \item Table analysis\_results: ML anomaly detection results for eacg analyzed log filed are
+                    stored in this table with some information such as number of sequences, anomaly and normal sequences
+                    count
+
+
+          \end{itemize}
+
+          The database schema also implement logical relationships between entities. Each user can upload
+          multiple log files and create multiple processing jobs. The log file entity is a central reference
+          point to connect both processing jobs and analysis results. This implement means each log file
+          can be associated with multiple processing jobs, which happen when reprocessing is required due to
+          any failures in the pipeline. In addition, each log file can also link to multiple analysis results
+          to support the LLM integration stage.
+
 
     \item Model implementation
+          \begin{figure}[H]
+              \centering
+              \includegraphics[width=0.86\textwidth]{data-model.png}
+              \caption{System database schema}
+              \label{fig:data-model}
+          \end{figure}
 
+          In this project SQLAlchemy ORM (Object Relational Mapping) is used to create
+          a clean abstraction over a complex relational database. There are will be four
+          model configuration file for four entities coordinatly. Each file is defined how
+          information of a enity is store and connected within our database. Figure \ref{fig:data-model}
+          shows how a model (Users model) is initialize in the project. The Users entity stores
+          authentication information with server key attributes such as id which is identified
+          for each user, username and password to log into the system. This file also so handle
+          relationship with other entities, in this case, Users model have a one-to-many relationship
+          with the LogFile entity. Each user can upload multiple log files, and each log file
+          link to its owner via a foreign key.
 \end{enumerate}
 
 % fasdfasd
@@ -859,6 +904,14 @@ mapped to relational database tables.
 % - detail
 
 \subsection{API Endpoints Implementation}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.02\textwidth]{api2.drawio.png}
+    \caption{API endpoints}
+    \label{fig:endpoints}
+\end{figure}
+
 
 
 

@@ -909,12 +909,12 @@ Figure \ref{fig:endpoints} described all the endpoints that are exposed by the b
 the system that cover authentication, log management, job processing, and LLM results generation.
 Each endpoint is responsible for a specific functions in the entire processing pipeline.
 
-\begin{figure}[H]
+\begin{table}[H]
     \centering
-    \includegraphics[width=1.02\textwidth]{api1.drawio.png}
+    \includegraphics[width=1\textwidth]{api1.drawio.png}
     \caption{API endpoints}
     \label{fig:endpoints}
-\end{figure}
+\end{table}
 \vspace{20pt}
 
 \textbf{\large{Endpoints implementation detail:}}
@@ -1040,10 +1040,76 @@ structured data and perform anomaly detection with machine learning algorithm.
 % - Unique filename generation
 
 \subsection{Asynchronous Processing with Celery}
-- Celery configuration
-- DatabaseTask base class
-- Task retry logic
-- Job status updates
+
+
+\begin{enumerate}[label=\alph*.]
+
+    \item Introduction to distributed task processing
+
+          Distributed task processing has become increasingly imprtant in modern system because
+          this technology allows all tasks are distributed efficiently accross multiple nodes.
+          This approach enhances system scalability, performance, and enable entensive computation
+          can be efficiently execute. Several tools and framework have been proposed to handle
+          distributed task execution such as Apache Hadoop or Apache Spark. However, in this project,
+          Celery is use to handle distributed task processing which is a framework that built on top
+          of the Advanced Message Queuing Protocol (AMQP) paradigm. For the context of log anomaly
+          detection, for example, parsing a 50MB HDFS log file with traditional subsequent methods
+          require 30-100 seconds to finish, this means the entire system have to wait until the
+          process complete. This issue exeed typical HTTP timeou thresholds, therefor degrading
+          user experience and increase the risk of resource exhaustion. With Celery, instead of waiting for the entire processing
+          to finish, the API only submits its task to a queue and immediately returns control to the user.
+          Celery workers then fetch tasks from the message broker, execute them in the background,
+          and update the job status in the database.
+
+          % \begin{figure}[H]
+          %       \centering
+          %       \includegraphics[width=1\textwidth]{minio-edit.png}
+          %       \caption{Objects stored in MinIO}
+          %       \label{fig:minio-name }
+          %   \end{figure}
+
+    \item Celery Implementation and Configuration
+
+          This system employs Celery as asynchronous task processing solution and also integrate with
+          Redis as its message broker. This approach is provides a easier and more lightweight
+          solution for task distribution without operational overhead of another message broker
+          is RabbitMQ.
+
+          \begin{figure}[H]
+              \centering
+              \includegraphics[width=0.85\textwidth]{celery-config.png}
+              \caption{Celery application configuration}
+              \label{fig:celery-config}
+          \end{figure}
+
+          Figure \ref{fig:celery-config} presents a simple configuration to established
+          Celery application and the connection to Redis message broker which is also act
+          as a place to store task results. The architecture follows a standard
+          producer-consumer model: when a use upload a log file through REST API,
+          our FastAPI backend (producer) stores file in MinIO and then publishing a message(task)
+          to Redis queue with an unique ID. Celery workers running in background, continuously
+          poll the queue for pending task. When receiving a task message, a worker executes the
+          processing logic, updates job status in the database,
+          and optionally publishes results back to Redis.
+
+    \item Task Implementation
+
+          \begin{enumerate}[label=\arabic*.]
+
+              \item Log Processing Task
+              \item Machine Learning Analysis Task
+          \end{enumerate}
+
+    \item DatabaseTask Base Class
+
+\end{enumerate}
+
+
+
+% - Celery configuration
+% - DatabaseTask base class
+% - Task retry logic
+% - Job status updates
 
 \subsection{Drain Parser Integration}
 - Parser service wrapper

@@ -831,7 +831,7 @@ entire system into modular routers and components in order to maintain and scale
 
 
 \subsection{Database Layer Implementation}
-
+fSupport Vector Machine (SVM)
 The database layer was built based on PostgreSQL database with SQLAlchemy ORM which allows developers
 to interact with relational databases using Python classes and objects instead of using raw SQL queries.
 All entities in the system such as users, logs, jobs and analysis are represented as ORM models ann then
@@ -905,22 +905,139 @@ mapped to relational database tables.
 
 \subsection{API Endpoints Implementation}
 
+Figure \ref{fig:endpoints} described all the endpoints that are exposed by the backend of
+the system that cover authentication, log management, job processing, and LLM results generation.
+Each endpoint is responsible for a specific functions in the entire processing pipeline.
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.02\textwidth]{api2.drawio.png}
+    \includegraphics[width=1.02\textwidth]{api1.drawio.png}
     \caption{API endpoints}
     \label{fig:endpoints}
 \end{figure}
+\vspace{20pt}
 
+\textbf{\large{Endpoints implementation detail:}}
+
+This section will provide detail of technical implementation of some important API endpoints.
+
+\begin{enumerate}[label=\arabic*.]
+
+    \item POST \verb|/api/logs/upload|
+
+          This is the core enpoint that handles the file upload process in the system workflow.
+          It exposes a interface for users to upload their log file, store them in object
+          storage system, register a record in the datase and finally trigger an
+          asynchronous prossing jobs for further analysis.
+
+          The endpoint is implemented as HTTP POST route under path /api/logs/upload.
+          It is defined using FastAPI's router and use asynchronous mechanism to
+          handle request in order to ensure non-blocking I/O operations. When the backend
+          receive a request from this endpoint, it first initialize a \texttt{LogService}
+          instance which is a service layer that hold the business logic. The uploaded
+          file is then validated for allowed extension. If the file extension does not match
+          the \texttt{.log} extension, the method will immediately return HTTPException with
+          status code 400 which is indicated a bad request error. The endpoint is continue
+          to operate \texttt{LogService.save\_log\_file()} method which is responsible for
+          uploading valid log files to MinIO and save its metadata to the database.
+          Finally, the method return a structured results of several information.
+
+          \begin{figure}[H]
+              \centering
+              \includegraphics[width=0.9\textwidth]{upload-endpoint.png}
+              \caption{Logs upload endpoints}
+              \label{fig:Upload-endpoints}
+          \end{figure}
+
+    \item GET \verb|/api/auth/token|
+
+          This endpoint is responsible for handling JSON Web Tokens (JWTs) to verify
+          user within the system. Once the backend receive request, \texttt{UserService}
+          will perform user finding, password verification and generate token.
+          When the authentication is successfully done, the service will create JWT
+          which contains user's information and attach it to request header when
+          accessing protected resources.
+          \begin{figure}[H]
+              \centering
+              \includegraphics[width=0.8\textwidth]{token-api.png}
+              \caption{Token endpoints}
+              \label{fig:token-endpoints}
+          \end{figure}
+
+\end{enumerate}
 
 
 
 
 \section{Log Processing Pipeline}
+
+This section provides detail implementations of multi-stage log processing pipeline
+within the system. This pipeline is responsiple for transform raw logs into
+structured data and perform anomaly detection with machine learning algorithm.
+
 \subsection{File Upload and Storage}
-- MinIO client integration
-- File validation logic
-- Unique filename generation
+
+\begin{enumerate}[label=\alph*.]
+
+    \item MinIO Client Integration
+
+          MinIO was selected as the object storage solution in this project to store raw log data
+          due to its high performance and suitable for containerized deployments. The
+          system implements a Python MinIOClient wrapper class that abstracts from
+          the MinIO Python SDK.
+
+          \begin{figure}[H]
+              \centering
+              \includegraphics[width=0.8\textwidth]{minio.png}
+              \caption{minio\_client.py file}
+              \label{fig:minio\_client.py file }
+          \end{figure}
+
+          When initializing this class, the client create a connection using predefined
+          access credentials and also vericate bucket with \texttt{\_ensure\_bucket\_exists()}
+          method. This ensure the target bucket exist and automatically create it if
+          necessary. The application also implement singleton pattern for MinIO client, where
+          only one instance of \texttt{MinIOClient} is created and shared across the entire
+          backend. This design allows system to maintain consistent connection with MinIO that helps
+          uploading and storing operations faster.
+
+
+    \item File Upload Implementation
+
+          File upload mechanism is implemented inside \texttt{upload\_file()} method.
+          The method first wrap log file data in \texttt{io.BytesIO} to transform data to
+          file-like interface to that required by MinIO SDK. The the method perform
+          an upload to existing MinIO bucket and a return a response with useful
+          information when the upload is done.
+
+          \begin{figure}[H]
+              \centering
+              \includegraphics[width=1\textwidth]{upload-file.png}
+              \caption{File upload method}
+              \label{fig:file-upload }
+          \end{figure}
+
+    \item Unique Filename Generation
+
+          To ensure files that uploaded to MinIO have the unique object name, the system develop
+          a mechanism to create unique name for each object by combining timestamp, random
+          characters and its original filename. As a result, each log file save to MinIO
+          bucket will have result path as logs/{user\_id}/{timestamp}\_{uuid}\_{filename}.log.
+          This strategy ensure the object name colision probability is extreme low and
+          therefore reduce the error rate within the system. In addition, objects is store in
+          separate user-scope directories which support better audition and efficient lookup.
+
+          \begin{figure}[H]
+              \centering
+              \includegraphics[width=1\textwidth]{minio-edit.png}
+              \caption{Objects stored in MinIO}
+              \label{fig:minio-name }
+          \end{figure}
+\end{enumerate}
+
+% - MinIO client integration
+% - File validation logic
+% - Unique filename generation
 
 \subsection{Asynchronous Processing with Celery}
 - Celery configuration

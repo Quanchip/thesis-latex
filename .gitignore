@@ -17,7 +17,7 @@
 *.run.xml
 
 # ===== Output =====
-*.pdf
+# *.pdf
 
 # ===== Editor / OS =====
 .vscode/

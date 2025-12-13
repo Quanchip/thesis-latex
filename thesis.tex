@@ -4,10 +4,9 @@
 \usepackage[a4paper, margin=2.5cm]{geometry}
 \usepackage[skip=10pt plus1pt, indent=40pt]{parskip}
 \usepackage{tocloft}
-\usepackage{cite}
 \usepackage{titlesec}
 \usepackage{times}
-\usepackage{natbib}
+\usepackage[numbers]{natbib}
 \usepackage{url}
 \usepackage{hyperref}
 \usepackage{enumitem}
@@ -16,6 +15,7 @@
 \usepackage{pgfgantt}
 \usepackage{booktabs}
 \usepackage{array, multirow}
+\usepackage{amsmath}
 
 
 
@@ -990,7 +990,7 @@ structured data and perform anomaly detection with machine learning algorithm.
               \centering
               \includegraphics[width=0.8\textwidth]{minio.png}
               \caption{minio\_client.py file}
-              \label{fig:minio\_client.py file }
+              \label{fig:minio\_client.py}
           \end{figure}
 
           When initializing this class, the client create a connection using predefined
@@ -1014,7 +1014,7 @@ structured data and perform anomaly detection with machine learning algorithm.
               \centering
               \includegraphics[width=1\textwidth]{upload-file.png}
               \caption{File upload method}
-              \label{fig:file-upload }
+              \label{fig:file-upload}
           \end{figure}
 
     \item Unique Filename Generation
@@ -1097,10 +1097,38 @@ structured data and perform anomaly detection with machine learning algorithm.
           \begin{enumerate}[label=\arabic*.]
 
               \item Log Processing Task
+
+                    The system implementes a two-stage processing pipeline through chained Celery task.
+                    The first task is \texttt{preprocess\_task} which is used for log parsing and
+                    transform to structured csv file. The detail steps will be described as follow.
+                    The Celery worker first retrieve the log file from MinIO object strorage and decode
+                    UTF8 centent, then invoke the Drain parser service for template extraction.
+                    The parser result is then transform into CSV format to provide human-readable
+                    format and serve as a input to machine learning task. The structured CSV is
+                    uploaded to other MinIO bucket and save the bucket information to database for
+                    retrieving during ML task. Finally, it enqueue the next \texttt{ml\_analysis\_task}
+                    to the message queue, this allows the current worker to complete and accept
+                    new task while letting other workers to process ML task. All the implements as code
+                    is show at Figure \ref{fig:log-task}.
+
+                    \begin{figure}[H]
+                        \centering
+                        \includegraphics[width=1\textwidth]{log-task.png}
+                        \caption{Log process task implementation}
+                        \label{fig:log-task}
+                    \end{figure}
+
               \item Machine Learning Analysis Task
+
+                    This task is responsible for the second stage of the task chain, where it consume CSV
+                    input, perform machine learning detection and present output. At the beginning of the
+                    task, worker retreive structured log CSV file from MinIO, the pre-trained model is
+                    then invoked for prediction. After the prediction successfully done, all the
+                    important information such as total logs, anomaly count, and prediction log
+                    sequences are stored in to database. Only after the analysis task complete, the
+                    entire job will be marked as COMPLETE.
           \end{enumerate}
 
-    \item DatabaseTask Base Class
 
 \end{enumerate}
 
@@ -1112,21 +1140,142 @@ structured data and perform anomaly detection with machine learning algorithm.
 % - Job status updates
 
 \subsection{Drain Parser Integration}
-- Parser service wrapper
-- Temporary file handling
-- Template extraction
-- Output structuring
+
+
+The system encapsulates the Drain parser algorithm that introduced in previous chapter within a
+custom python class. The approach wrap the entire original complex Drain algorithm into a clean interface
+for system to interact with. At the beginning the wrapper defines a format presets for
+common log types. In the current implementation, the HDFS log format is defined using a fixed template that explicitly
+separates timestamps, process identifiers, log levels, components, and message content.
+This structured definition ensures consistent field extraction and reduces ambiguity during parsing.
+When user invoke the the parser service with a specific
+log format, these optimized settings wil be applied automatically. In Figure \ref{fig:drain},
+the implementation will provide a contructor for \texttt{DrainParserService} with several parameters
+such as similarity threshold (st), parse tree depth (depth), and maximum children per node (max\_child).
+These parameters allow control over parsing behavior which will enable user to customize as
+they wish. Overall, this approach provides an easy solution and reuseable interface for system
+to integrate complex algorithm in anywhere.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{drain-imple.png}
+    \caption{Drain algorithm wrapper implementation}
+    \label{fig:drain}
+\end{figure}
+
+
+
+% - Parser service wrapper
+% - Temporary file handling
+% - Template extraction
+% - Output structuring
 
 \subsection{Feature Extraction}
-- Event counting
-- Statistical features
-- CSV conversion
 
-\subsection{Decision Tree Anomaly Detection}
-- Model training code
-- Feature preparation
-- Prediction pipeline
-- Result storage
+The next step in the data preprocessing pipeline is feature extraction which
+transform Drain-parsed data in to numerical feature vectors. This sections
+presents the implementation of integrating loglizer library's \texttt{FeatureExtractor}
+class to convert event sequences into  fixed-dimensional count matrices
+suitable for machine learning classification. In the proposed system, feature
+extraction is applied at two distinct phases: (1) During trainning phase, where
+model learned and serialized for reuse, (2) during online inference, where the same
+transformation logic is applied to user lof data.
+
+\begin{enumerate}[label=\alph*.]
+
+    \item Training Phase
+
+          Firgure shows the configuration for feature extraction during the offline trainning
+          process. Parse log is first loaded using session-based windowing strategy. This
+          strategy group structured log events by session identifiers and will mark
+          anomalt label at sequence level not entry level. Once the
+          sequences are prepared, \texttt{FeatureExtractor} class is invoked to convert
+          event sequences into numerical feature vectors that required by machine learning
+          algorithms. This transform is based of event frequency statistics, which mean that
+          whe count the occurence the number of single log event to form the event
+          count vector. Finally every count vector are formed an event count metrix $X$,
+          where entry $X_{i,j}$ presents many times the event $j$ occurred in the $i$-th log sequence
+          \cite{7774521}.
+
+          \begin{figure}[H]
+              \centering
+              \includegraphics[width=1\textwidth]{feature-extract.png}
+              \caption{Feature extraction implementation}
+              \label{fig:feature}
+          \end{figure}
+
+    \item Inference Phase
+
+          In the inference phase, feature extraction is executed inside Celery background task.
+          Parsed log sequences generate from new logs are transform using pre-trained feature extractor.
+          This ensures that the same event vocabulary and weighting scheme learned during training
+          are are consistently applied. This approach helps system avoids feature drift and maintains
+          reliable outcomes.
+
+
+\end{enumerate}
+
+
+% - Event counting
+% - Statistical features
+% - CSV conversion
+
+\subsection{Machine Learning Implementation for Anomaly Detection}
+
+This section will evaluate multiple machine learning models for logs anomaly detection
+to find the suitable approach that have the most suitable in term of performance and
+system efficiency for the project. After log parsing and event sequences construction,
+Several machine learning models were trained and evaluated on the same dataset
+to ensure fair comparison. The base code for machine learning algorithms were provided
+by Loglizer project \cite{7774521} as mentioned erlier in this study. Each algorithm is
+training with default parameters to establish baseline performance before hyperparameter
+optimization. The training pattern followed a consistent flow across all models as showing
+in Figure \ref{fig:model}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{model-train.png}
+    \caption{Standard training workflow}
+    \label{fig:model}
+\end{figure}
+
+To measures the performance of each model, I use  precision, recall and F-measure,
+whichare the most commonly usedme trics, to evaluate the
+accuracy of anomaly detection methods as we already have
+the ground truth (anomaly or not) for the dataset. As shown below, precision
+measures the proportion of how many anomolies are correctly identified in
+those reported.
+
+
+
+    {\large
+        $$
+            Precision = \frac{\# Anomaly detected}{\# Anomaly reported}
+        $$
+        $$
+            Recall = \frac{\# Anomaly detected}{\# All anomalies}
+        $$
+        $$
+            F-measure = \frac{2 \times Precision \times Recall}{Precision + Recall}
+        $$}
+
+
+Based on the experiment results that capsulates in Figure , The Decision Tree
+model demonstates that most superior performance among all approaches.
+It achieve near-perfect score for all three evaluated metrics on both training
+and testing data. SVM algorithm also perform well with F1 score approach 0.964
+but the algorithm itself is more complex and harder to understand. PCA and
+clustering-based methods have high precision score but low in recall, there for
+decrease its ability to dectect diverse pattern. Forest and Logistic Regression
+provide moderate score but much lower than Decision Tree model.  As the result,
+Decision Tree model achieves the optimal accuracy and operational simplicity
+for my production log anomaly detection framework.
+% - Model training code
+% - Feature preparation and how ml predict anomaly
+% - Prediction result
+% - Comparison betweeb models and why choose Decision tree
+% - Result storage
 
 \section{LLM Integration}
 \subsection{LLM Service Design}
@@ -1153,7 +1302,7 @@ structured data and perform anomaly detection with machine learning algorithm.
 \subsection{Key Components}
 
 
-
+\chapter{RESULT}
 \chapter{CONCLUSION AND RECOMMENDATION}
 
 

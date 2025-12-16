@@ -38,8 +38,8 @@
 \graphicspath{{img/}}
 
 \begin{document}
-\pagenumbering{roman}
 
+\thispagestyle{empty}
 \begin{center}
     \textbf{VIETNAM NATIONAL UNIVERSITY OF HO CHI MINH CITY}\\[6pt]
     \textbf{INTERNATIONAL UNIVERSITY}\\[6pt]
@@ -53,18 +53,21 @@
 
 \begin{center}
     \textbf{\huge {Anomaly Detection in HDFS Logs}}
-    \textbf{\huge {using Machine Learning Integrated with
+    \textbf{\huge {Using Machine Learning Integrated With
             LLM-Based Mitigation}}\\[50pt]
 
     \textbf{By}\\
-    \textbf{Nguyen Hoang Quan}\\[20pt]
-    \textbf{The thesis submitted to School of Computer Science and Engineering in partial fulfillment of the requirements of the degree of Bachelor of Engineering of Information Technology}\\[80pt]
+    \textbf{Nguyen Hoang Quan - ITITIU21291}\\[50pt]
+    \textbf{The thesis submitted to School of Computer Science and Engineering
+        in partial fulfillment of the requirements of the degree of Bachelor of Engineering
+        of Information Technology}\\[70pt]
 
     \textbf{Ho Chi Minh, Viet Nam}\\
     \textbf{2025}
 \end{center}
 
 \newpage
+\pagenumbering{roman}
 \newgeometry{
     % Define the margin values:
     left=1.5in,
@@ -77,18 +80,43 @@
 
 
 \begin{center}
-    \textbf{\Large{Anomaly Detection in HDFS Logs using Machine         Learning Integrated
-            with LLM-Based Mitigation
+    \textbf{\Large{Anomaly Detection In HDFS Logs Using Machine         Learning Integrated
+            With LLM-Based Mitigation
         }}\\[80pt]
 
 \end{center}
 
-\begin{flushright}
-    \textnormal{APPROVED BY: \rule{6cm}{0.5pt}}
-\end{flushright}
+\begin{center}
+    \textnormal{APPROVED BY: }
+
+
+    \hspace{0.4\linewidth} \hrulefill \\ % Bắt đầu ở giữa (50% chiều rộng) và kéo dài sang phải
+    \vspace{1.2cm} % Điều chỉnh dòng xuống nếu cần
+
+
+    \hspace{0.4\linewidth} \hrulefill \\ % Bắt đầu ở giữa (50% chiều rộng) và kéo dài sang phải
+    \vspace{1.2cm} % Điều chỉnh dòng xuống nếu cần
+
+
+    \hspace{0.4\linewidth} \hrulefill \\ % Bắt đầu ở giữa (50% chiều rộng) và kéo dài sang phải
+    \vspace{1.2cm} % Điều chỉnh dòng xuống nếu cần
+
+    \hspace{0.4\linewidth} \hrulefill \\ % Bắt đầu ở giữa (50% chiều rộng) và kéo dài sang phải
+    \vspace{1.2cm} % Điều chỉnh dòng xuống nếu cần
+
+    \hspace{0.4\linewidth} \hrulefill \\ % Bắt đầu ở giữa (50% chiều rộng) và kéo dài sang phải
+    \vspace{1.2cm} % Điều chỉnh dòng xuống nếu cần
+
+    \hspace{0.5\linewidth}
+    \textnormal{THESIS COMMITTEE}
+
+
+\end{center}
 
 
 \newpage
+
+\vspace{-20pt}
 
 \begin{center}
     \textbf{\large{ACKNOWLEDGEMENTS}}\\[20pt]
@@ -112,10 +140,20 @@ This thesis would not have been possible without the guidance, resources, and su
 \listoffigures
 
 \newpage
+\pagenumbering{arabic}
+\newgeometry{
+    left=1.5in,
+    right=1in,
+    top=1in,
+    bottom=1.5in,
+}
+
+\addcontentsline{toc}{chapter}{ABSTRACT}
 
 \begin{center}
-    \textbf{\large{ABSTRACT}}\\[20pt]
+    \textbf{\large{ABSTRACT}}\\[15pt]
 \end{center}
+
 
 Anomaly detection is essential for managing today’s large-scale distributed systems, where system logs are a key resource for identifying unusual behavior. Traditionally, system operators relied on manual inspection methods such as keyword searches and rule-based matching. However, due to the massive volume and complexity of modern system logs, manual approaches are no longer practical. To tackle this, many automated log-based anomaly detection methods have been proposed. Still, developers often struggle to choose a suitable method, as there hasn't been a clear comparison of these approaches.
 
@@ -123,10 +161,19 @@ In this research, I will propose a solution to addresses the fundamental challen
 
 Previous research has established some foundational approaches including the algorithms for log parsing and machine learning techniques for anomaly detection. However, existing solutions typically focus on individual components rather than providing end-to-end integration. Most academic implementations lack production-ready deployment architectures, user-friendly interfaces, and the integration of modern Large Language Models (LLMs) for intelligent recommendations—creating a significant gap between theoretical algorithms and practical deployment. Therefore, this research is important since it close the gap between academic log analysis algorithms and production-ready systems.
 
-Furthermore, the research establishes a framework for integrating emerging LLM capabilities into traditional system administration workflows, suggesting broader implications for AI-assisted DevOps practices. The findings indicate that intelligent automation of log analysis is not only technically feasible but can significantly enhance organizational capabilities in system reliability, security monitoring, and operational efficiency.
+Furthermore, the research establishes an application that integrating emerging LLM capabilities into traditional system administration workflows, suggesting broader implications for AI-assisted practices. The findings indicate that intelligent automation of log analysis is not only technically feasible but can significantly enhance organizational capabilities in system reliability, security monitoring, and operational efficiency.
 
+\restoregeometry
 \newpage
-\pagenumbering{arabic}
+
+\newgeometry{
+    left=1.5in,
+    right=1in,
+    top=1in,
+    bottom=1.5in,
+}
+
+
 \setcounter{page}{1}
 
 \chapter{INTRODUCTION}
@@ -177,20 +224,44 @@ several significant challenges still persist in current practices:
           changes require retraining models from scratch which make the systems become less practical
           in dynamic environments.
 
-    \item \textit{Poor adaptability.}
+    \item \textit{Poor adaptability.} Many current approaches are using static rules or models
+          trained on old data which make them struggle to adapt to new log patterns or new unseen failures.
+          This lack adaptability reduces the effectiveness of the methods and make it impractical in
+          real-word scenarios.
 
 \end{itemize}
 
 \section{Objectives of the Study}
 
-This study will perform the investigation on existing anomaly-detection
+This study aim to perform the investigation on existing anomaly-detection
 methodologies, compares the performance of different machine-learning
 models, and develops a practical framework that integrates large language
 models (LLMs) to automate and improve anomaly detection in real-world scenario.
+At the end of the study, there are some main objectives that this study aim to
+achieve:
 
+\begin{enumerate}[label=(\arabic*)]
+    \item Implementing an application for providing a better user interface in
+          anomaly detection fields.
+
+    \item Applying parsing tools and machine learning algorithms for log
+          anomaly detection.
+
+    \item Integrate large language models into the system to generate
+          explanations and actionable mitigation recommendations.
+\end{enumerate}
 
 
 \section{Limitations of the Study}
+
+Several limitations are still presented in this research. Firstly, the study focused only
+on HDFS logs, so therefore the result may not be directly applicable for other types such
+as application logs or network device logs. Second, the model evaluation was conducted on
+pre-labeled dataset which may not fully address the challenges that related to real
+production environments. Finally, scalability testing was not conducted on the system to
+examine its performance under extensive user loads. The system is designed to handle
+scalability in mind but the real validation was beyond the scope of this thesis.
+
 
 
 \chapter{LITERATURE REVIEW}
@@ -208,7 +279,7 @@ both the context and content of the event.\\[10pt]
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{hdfs-log.png}
-    \caption{This is the descriptive text that explains the figure.}
+    \caption{An example of raw logs taken from HDFS dataset}
     \label{fig:hdfs-log} % The label for cross-referencing
 \end{figure}
 
@@ -270,6 +341,34 @@ unsuitable for adaptive anomaly detection.
 
 \section{Log parsing}
 
+After log collection, raw logs are often semi-structured which contains constant parts and
+variable parts and may vary among different entries. Log parsing process responsibility is
+to transform those raw unstructured logs into structured format for downstream analysis.
+Log parsing techniques will try to identified constant/static fields and dynamic fields.
+The constant part are often log events, log template and the variables part are often
+the fields that can change (e.g., IP address, thread name, job ID, message ID). For example
+in Figure \ref{fig:parser}, a log entry is collected from Hadoop Distributed
+File System (HDFS) dataset \cite{zhu2023loghub} "Received block-562725280853087685 of size 67108864
+from 10.251.91.84" is parsed to log event
+``Received block \textless{}*\textgreater{} of size \textless{}*\textgreater{} from \textless{}*\textgreater{}'',
+where all changed parameters are captured
+in ``\textless{}*\textgreater{}''. There are two common parsing techniques:
+clustering-based (e.g., LogSig \cite{tang2011logsig}, LKE\cite{fu2009execution})
+and heuristic-based (e.g., SLCT \cite{vaarandi2003data}, iPLoM \cite{makanju2009clustering}). In the former method, distance between logs is
+calculate at the beginning, and use clustering techniques to group logs in to cluster. Event template
+is generated at the end for each cluster. For the heuristic-based approaches, it count the appearance
+of ech log entries and composed frequent words as event candidate. And finally, some are chosen
+to become log events.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{parser.png}
+    \caption{Example of Log Parsing}
+    \label{fig:parser} % The label for cross-referencing
+\end{figure}
+
+
+
 
 \section{Machine learning and deep learning for log anomaly detection}
 
@@ -293,13 +392,15 @@ supervised or unsupervised learning.
           and normal one will be served as positive examples. But using this method for detecting
           anomalies often often suffers from class imbalance, where the positive examples is outnumber
           the negatives. As the result, the classifier will overfit the anomalous logs, which make
-          it become weak in detecting new occur, unseen logs.
+          it become weak in detecting new occur, unseen logs. Figure \ref{fig:svm} shows principle
+          behind using SVM to create an optimal boundary between normal and anomalous log database
+          in a feature space.
 
           \begin{figure}[H]
               \centering
               \includegraphics[width=0.7\textwidth]{svm.jpg}
               \caption{SVM classification}
-              % \label{fig:my_image} % The label for cross-referencing
+              \label{fig:svm} % The label for cross-referencing
           \end{figure}
 
     \item Decision Tree (DS)
@@ -335,10 +436,10 @@ supervised or unsupervised learning.
 \subsection{Unsupervised learning}
 
 In many situation when anomaly data is not labeled or unavailable, the supervised
-learning is thereby become impractical. As a result, unsupervised learing methods
+learning is thereby become impractical. As a result, unsupervised learning methods
 have been adopted widely for log anomaly detection. These approaches aim to analyze
 data without requiring labeled examples by discovering the characteristics of the
-data itseft. This section will examine some popular unsupervised approaches that are
+data itself. This section will examine some popular unsupervised approaches that are
 currently applied to log analysis.
 
 \begin{enumerate}[label=\alph*.] % Sets the label format to (a), (b), (c)...
@@ -347,7 +448,7 @@ currently applied to log analysis.
 
           Isolation Forrest is a machine learning algorithm that was introduced by Liu et al
           \cite{liu2012isolation} in 2012. His core principle of isolation forrest is that
-          anomolies are more accessible to isolate than abnomalous points \cite{Longberg2024}.
+          anomalies are more accessible to isolate than anomalous points \cite{Longberg2024}.
           The algorithms will construct forrest of random binary trees to separate each
           data point. Each tree us built by randomly selecting a feature from the dataset
           and a split value within the feature's range, then repetitive split the
@@ -357,11 +458,11 @@ currently applied to log analysis.
               \centering
               \includegraphics[width=1\textwidth]{isolation-forrest.png}
               \caption{Isolation Forest}
-              % \label{fig:my_image} % The label for cross-referencing
+              \label{fig:isolation} % The label for cross-referencing
           \end{figure}
 
-          Figure 2.3 demonstrates the isolation capabilities of Isolation Forest algorithm.
-          In the left, the data point is seperated with only one split, indicating a high anomaly score.
+          Figure \ref{fig:isolation} demonstrates the isolation capabilities of Isolation Forest algorithm.
+          In the left, the data point is separated with only one split, indicating a high anomaly score.
           On the other hand, data point on the right requires more splits,  suggesting it’s a
           nominal data point
     \item Principal Component Analysis (PCA)
@@ -380,21 +481,17 @@ currently applied to log analysis.
           it as abnormal behavior by calculating the Square Prediction Error (SPE) \cite{jackson1979control}
           , which measures the deviation from the learned normal patterns.
 
-    \item K-Means Clustering
 
 
 
 \end{enumerate}
 
-- ml techniques: https://arxiv.org/pdf/2307.16714
 
-\section{Large Language Models (LLMs) in Log Analysis}
+% Parsing with LLMs instead of templates:
 
-Parsing with LLMs instead of templates:
+% % https://zeyang919.github.io/paper/LLMParser.pdf?utm_source=chatgpt.com
 
-% https://zeyang919.github.io/paper/LLMParser.pdf?utm_source=chatgpt.com
-
-Explainability + anomaly detection:
+% Explainability + anomaly detection:
 
 \chapter{METHODOLOGIES}
 
@@ -404,9 +501,9 @@ Explainability + anomaly detection:
 This chapter describes the methodology that used to design, implement, and evaluate the
 proposed log anomaly detection framework. The methodology follows a pipeline that begins with
 data collection and preprocessing, then extract the features and using machine learning techniques
-to detect anomolies. Large language models (LLMS) are also integrated to address the limitations
+to detect anomalies. Large language models (LLMS) are also integrated to address the limitations
 of the traditional approaches, giving more insights and contextual understanding of detected
-anomolies. This chapter is organized to present each stage of a framework, from system arichiteture
+anomalies. This chapter is organized to present each stage of a framework, from system architecture
 and how data is prepared to model Implementation and evaluation.
 
 \subsection{Research Approach}
@@ -441,15 +538,18 @@ rather than automated direct action, and thereby preventing unintended operation
 The proposed framework follows a pipeline from transform raw systems logs into structured one and useful
 recommendations through a sequence of stages. Figure \ref{fig:pipeline} illustrates the overall pipeline.
 
-The pipeline begins with log preprocessing, where raw logs are parsed using the Drain algorithm. This
-step will convert raw and unstructured log into sequence of structured events and extract event templates.
+\begin{enumerate}[label=(\arabic*)]
+    \item The pipeline begins with log preprocessing, where raw logs are parsed using the Drain algorithm. This
+          step will convert raw and unstructured log into sequence of structured events and extract event templates.
 
-Structured log sequences will be the input for the processing step, where it will be transformed to
-numerical representations and then fed to machine learning models for anomaly detection.
+    \item Structured log sequences will be the input for the processing step, where it will be transformed to
+          numerical representations and then fed to machine learning models for anomaly detection.
 
-The final stage integrates large language models (LLMs) to enhance system interpretability. LLMs component
-will perform semantic analysis based on detected anomalies and generate human-readable explanations about
-root casues and useful suggestions. \\[10pt]
+    \item The final stage integrates large language models (LLMs) to enhance system interpretability. LLMs component
+          will perform semantic analysis based on detected anomalies and generate human-readable explanations about
+          root causes and useful suggestions.
+\end{enumerate}
+
 
 \begin{figure}[H]
     \centering
@@ -505,7 +605,16 @@ key principles:
 
 The system uses a layered, distributed architecture which is designed to support efficient log ingestion and
 anomaly detection. Each layer is responsible for a distinct functionality ensuring the ease for development
-and maintenance.
+and maintenance. The layered architecture of the system is captured in Figure , and describes in detail
+as follows.
+
+\begin{figure}[H]
+    \centering
+    \hspace*{-2cm}
+    \includegraphics[width=1.3 \textwidth]{architecture.png}
+    \caption{System architecture}
+    \label{fig:architecture}
+\end{figure}
 
 \begin{enumerate}[label=\arabic*.]
 
@@ -527,7 +636,7 @@ and maintenance.
           The service layer hold the core business logic of the system. These services
           include authentication, handling log files, and managing model detection logic.
           and LLMs analysis.
-          By separating functions into discreate services, the architecture allows each service to
+          By separating functions into discrete services, the architecture allows each service to
           work independently and easy to change as you wish.
 
     \item Data Processing Layer
@@ -566,7 +675,7 @@ thus also the main focus point of this study. The logs were collected from the H
 File System (HDFS), which runs on the Amazon EC2 platform. This system is designed to run on
 commodity hardware and allows users to store and process large files. Each log event have one or more
 block identifiers which will enable grouping logs into sequence of events. And in fact, the sample
-logs snippet show in Figure \ref{fig:hdfs-log} are taken from HDFS data set. The core idea behind
+logs snippet show in Figure \ref{fig:hdfs-log} are taken from HDFS daWta set. The core idea behind
 the anomaly detection in this dataset is that some data blocks is fail to be processed by the
 system. When such failures happen, the blocks generate log events that differ from normal processing behavior.
 Therefore, the entire sequence should be detected as anomalous \cite{xu2009detecting}.
@@ -582,30 +691,99 @@ anomaly detection analysis and techniques evaluation.
 
 \section{Log Parsing Methodology}
 
+In this section, I briefly introduce to Drain the main parsing techniques used in this study which is
+a fixed depth tree-based method. The core principle of this algorithm is to organize log messages into
+a parse tree where each node represents a token position in the log messages \cite{he2017drain}.
+Drain parser first tokenize the log message typically using whitespace as delimiter. For example,
+log message like "Received block-562725 from node 10.0.0.1" is split into
+    ["Receive", "block", "blk\_562725", "from", "node", "10.0.0.1"] and these tokens are used to
+traverse through layer of a parse tree. The parse tree is illustrated in Figure \ref{fig:parse-tree}.
+At the first layer under the root node, the tree branches are represented number of tokens in
+log messages. Messages with the same length are routed to the same subtree. At the next
+layer , Drain use specific tokens to guide the route. If token have words like ``Sends'' or
+``Receive'', it is use as branch key. If token is identified as variables part, it will be
+replace with symbol *.
 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{parse-tree.png}
+    \caption{Structure of Parse Tree in Drain (depth = 3)}
+    \label{fig:parse-tree}
+    % \label{fig:my_image} % The label for cross-referencing
+\end{figure}
 
 
 \section{Feature Extraction / Representation}
+
+The main purpose of this step is to extract features that is valuable that can
+be utilized by anomaly detection models. The input of this step is
+structured log events generated during the log parsing then the output is
+event count matrix that represent characteristics of log sequences.
+The log must be organized in log sequences in order to construct features.
+This grouping process can be done through windowing techniques.
+In this project, three windowing techniques are considered.
+
+\begin{enumerate}[label=\arabic*.]
+    \item Fixed Window
+
+          Fixed windows groups logs based on timestamp using predefined tim duration.
+          All log event that occurred in this duration are grouped in to log sequence.
+          This approach is simple but mat mix unrelated log entry if it occur in the
+          same time window.
+
+    \item Sliding Window
+
+          Sliding window is the enhance version of fixed window by adding a step size to
+          window size.  In general, step size is smaller than window size, therefore
+          overlapping windows is occur.
+
+    \item Session Window
+
+          Session window is based on identifiers rather than timestamp compare to two
+          other windowing types. This method is practically suitable for distributed
+          system where every log contains an identifiers. As a result, logs with
+          the same identifiers are are grouped into a single session window.
+          In this project, session-based windowing is primarily used for the HDFS
+          dataset.
+\end{enumerate}
+
+Once the log sequences are created, feature vectors are generated by counting the occurrence
+of each log event in a sequence. Each log sequence is represented as an event count vector.
+
 \section{Anomaly Detection Models}
-\section{LLM Integration Method}
+
+To evaluate and select the most suitable approach for the anomaly detection framework,
+multiple machine learning models were trained and compared. Supervised machine learning
+algorithms that used are Decision Tree and Support Vector Machine (SVM), while unsupervised
+methods are Log Clustering, PCA, Invariants Mining, and Isolation Forest.
+Each model was trained using the same training dataset to ensure a fair comparison.
+Performance was evaluated on a test set using precision, recall, and F1-score.
+
+% \section{LLM Integration Method}
+
+% In this project, Large Language Models (LLMs) is not used for anomaly detection but
+% to enhance the interpretability of detected anomalies. The LLMs is mainly used to
+% explore the logs that are marked anomalies then generate explanations and
+% mitigation recommendations.
 
 
 
 
 
-\chapter{IMPLEMETATIONS}
+\chapter{IMPLEMENTATIONS}
 \section{Implementation Overview}
 
 This chapter will present the implementation of the proposed log anomaly detection application. Each
 components that are described in chapter 3 will be transformed to real functional code and integrate
-in to the system. The scope of this chapter is focus on implementaion details including
+in to the system. The scope of this chapter is focus on implementation details including
 configuration, library used, API designs and technologies that are used to build
 end-to-end system.
 
 
 \section{Implementation timeline}
 
-The system implementaion is followed a structured timeline that consists of several
+The system implementation is followed a structured timeline that consists of several
 phases and each phase will focus on a specific tasks and will be described as follow:
 
 
@@ -613,7 +791,7 @@ phases and each phase will focus on a specific tasks and will be described as fo
 \begin{itemize}
     \item \textit{Phase 1 (Week 1)}
 
-          This initial phase focused on prepare and research background knownledge for the project. Some
+          This initial phase focused on prepare and research background knowledge for the project. Some
           major activities are:
 
           \begin{itemize}
@@ -621,9 +799,9 @@ phases and each phase will focus on a specific tasks and will be described as fo
               \item Creating a literature review about log parsing, anomaly detection techniques,
                     and LLMs for log analysis.
 
-              \item Understanding about HDFS datatset, how it was generated, and its structure.
+              \item Understanding about HDFS dataset, how it was generated, and its structure.
 
-              \item Defining sytem requirements and architecture.
+              \item Defining system requirements and architecture.
 
           \end{itemize}
 
@@ -704,7 +882,7 @@ phases and each phase will focus on a specific tasks and will be described as fo
 
     \item \textit{Phase 7 (Week 12-13): Frontend Development}
 
-          A functional web interface is contructed and delivered in this phase using React technology:
+          A functional web interface is constructed and delivered in this phase using React technology:
 
           \begin{itemize}
 
@@ -750,8 +928,9 @@ phases and each phase will focus on a specific tasks and will be described as fo
 
 \section{Backend Implementation}
 
-The backend of the log analysis system was developed using FastAPI due to its ease of use and high performance.
-The implementation follows the layered architechture that introduced in Chapter 3 and therefore separate the
+The backend of the log analysis system was developed using FastAPI - a popular Python framework
+, due to its ease of use and high performance.
+The implementation follows the layered architecture that introduced in Chapter 3 and therefore separate the
 entire system into modular routers and components in order to maintain and scale more easily.
 
 \subsection{FastAPI Application Architecture}
@@ -760,7 +939,8 @@ entire system into modular routers and components in order to maintain and scale
 
     \item Application Initialization
 
-          The main application entry point is defined in `src/main.py`, where all routers and middlewares are registered.
+          The main application entry point is defined in `src/main.py` as shown in
+          Figure \ref{fig:main.py}, where all routers and middlewares are registered.
           The main application is also responsible for initializing CORS middleware and create all database
           tables that defined in SQLAlchemy models whenever the application start. This setup system features like Auth, Jobs
           Logs, to be managed by it own route files.
@@ -768,14 +948,14 @@ entire system into modular routers and components in order to maintain and scale
 
           \begin{figure}[H]
               \centering
-              \includegraphics[width=0.6\textwidth]{mainpy.png}
+              \includegraphics[width=0.6\textwidth]{main-py.png}
               \caption{main.py file}
               \label{fig:main.py}
 
           \end{figure}
 
 
-    \item Router Organization \\[7pt]
+    \item Router Organization
 
           \begin{table}[h]
               \centering
@@ -799,7 +979,7 @@ entire system into modular routers and components in order to maintain and scale
               \label{tab:module_responsibilities_final}
           \end{table}
 
-          Each domain in the system is seperated to different router to maintain the ability to
+          Each domain in the system is separated to different router to maintain the ability to
           scale, be readable when number of features and endpoint grows. The table \ref{tab:module_responsibilities_final}
           gives information about the total router that are implemented in the systems and their
           responsibilities. Routers itself will only communicate with service layers to mainin a well
@@ -815,8 +995,8 @@ entire system into modular routers and components in order to maintain and scale
 
           Figure \ref{fig:router.py} captures a code snippet that represent a pattern used for
           implementing router configuration. Each router will contain several endpoints that
-          directly relatect to that functional service layer. For example, the authentication
-          router includes enpoints for user creation, get login users or send access tokens.
+          directly related to that functional service layer. For example, the authentication
+          router includes endpoints for user creation, get login users or send access tokens.
           This approach allows developers to organize the application better and avoid as much as
           confusion in source code.
 
@@ -905,7 +1085,7 @@ mapped to relational database tables.
 
 \subsection{API Endpoints Implementation}
 
-Figure \ref{fig:endpoints} described all the endpoints that are exposed by the backend of
+Table \ref{fig:endpoints} described all the endpoints that are exposed by the backend of
 the system that cover authentication, log management, job processing, and LLM results generation.
 Each endpoint is responsible for a specific functions in the entire processing pipeline.
 
@@ -925,10 +1105,11 @@ This section will provide detail of technical implementation of some important A
 
     \item POST \verb|/api/logs/upload|
 
-          This is the core enpoint that handles the file upload process in the system workflow.
+          This is the core endpoint that handles the file upload process in the system workflow.
           It exposes a interface for users to upload their log file, store them in object
-          storage system, register a record in the datase and finally trigger an
-          asynchronous prossing jobs for further analysis.
+          storage system, register a record in the dataset and finally trigger an
+          asynchronous processing jobs for further analysis. Detail code implement is
+          captured in Figure \ref{fig:Upload-endpoints} and described as follow.
 
           The endpoint is implemented as HTTP POST route under path /api/logs/upload.
           It is defined using FastAPI's router and use asynchronous mechanism to
@@ -949,8 +1130,11 @@ This section will provide detail of technical implementation of some important A
               \label{fig:Upload-endpoints}
           \end{figure}
 
-    \item GET \verb|/api/auth/token|
+    \item POST \verb|/api/auth/token|
 
+
+          Figure \ref{fig:token-endpoints} describes a simple implementation of token
+          processing endpoint.
           This endpoint is responsible for handling JSON Web Tokens (JWTs) to verify
           user within the system. Once the backend receive request, \texttt{UserService}
           will perform user finding, password verification and generate token.
@@ -972,7 +1156,7 @@ This section will provide detail of technical implementation of some important A
 \section{Log Processing Pipeline}
 
 This section provides detail implementations of multi-stage log processing pipeline
-within the system. This pipeline is responsiple for transform raw logs into
+within the system. This pipeline is responsible for transform raw logs into
 structured data and perform anomaly detection with machine learning algorithm.
 
 \subsection{File Upload and Storage}
@@ -984,27 +1168,28 @@ structured data and perform anomaly detection with machine learning algorithm.
           MinIO was selected as the object storage solution in this project to store raw log data
           due to its high performance and suitable for containerized deployments. The
           system implements a Python MinIOClient wrapper class that abstracts from
-          the MinIO Python SDK.
+          the MinIO Python SDK. Figure \ref{fig:minio} captures the
+          code snippet of MinIOClient class from the system.
 
           \begin{figure}[H]
               \centering
               \includegraphics[width=0.8\textwidth]{minio.png}
               \caption{minio\_client.py file}
-              \label{fig:minio\_client.py}
+              \label{fig:minio}
           \end{figure}
 
-          When initializing this class, the client create a connection using predefined
-          access credentials and also vericate bucket with \texttt{\_ensure\_bucket\_exists()}
+          When initializing this class, the client creates a connection using predefined
+          access credentials and also verifies bucket with \texttt{\_ensure\_bucket\_exists()}
           method. This ensure the target bucket exist and automatically create it if
           necessary. The application also implement singleton pattern for MinIO client, where
           only one instance of \texttt{MinIOClient} is created and shared across the entire
           backend. This design allows system to maintain consistent connection with MinIO that helps
           uploading and storing operations faster.
 
-
     \item File Upload Implementation
 
-          File upload mechanism is implemented inside \texttt{upload\_file()} method.
+          File upload mechanism is implemented inside \texttt{upload\_file()} method and are captured
+          in Figure \ref{fig:file-upload}.
           The method first wrap log file data in \texttt{io.BytesIO} to transform data to
           file-like interface to that required by MinIO SDK. The the method perform
           an upload to existing MinIO bucket and a return a response with useful
@@ -1023,7 +1208,7 @@ structured data and perform anomaly detection with machine learning algorithm.
           a mechanism to create unique name for each object by combining timestamp, random
           characters and its original filename. As a result, each log file save to MinIO
           bucket will have result path as logs/{user\_id}/{timestamp}\_{uuid}\_{filename}.log.
-          This strategy ensure the object name colision probability is extreme low and
+          This strategy ensure the object name collision probability is extreme low and
           therefore reduce the error rate within the system. In addition, objects is store in
           separate user-scope directories which support better audition and efficient lookup.
 
@@ -1046,16 +1231,16 @@ structured data and perform anomaly detection with machine learning algorithm.
 
     \item Introduction to distributed task processing
 
-          Distributed task processing has become increasingly imprtant in modern system because
-          this technology allows all tasks are distributed efficiently accross multiple nodes.
-          This approach enhances system scalability, performance, and enable entensive computation
+          Distributed task processing has become increasingly important in modern system because
+          this technology allows all tasks are distributed efficiently across multiple nodes.
+          This approach enhances system scalability, performance, and enable extensive computation
           can be efficiently execute. Several tools and framework have been proposed to handle
           distributed task execution such as Apache Hadoop or Apache Spark. However, in this project,
           Celery is use to handle distributed task processing which is a framework that built on top
           of the Advanced Message Queuing Protocol (AMQP) paradigm. For the context of log anomaly
           detection, for example, parsing a 50MB HDFS log file with traditional subsequent methods
           require 30-100 seconds to finish, this means the entire system have to wait until the
-          process complete. This issue exeed typical HTTP timeou thresholds, therefor degrading
+          process complete. This issue exceed typical HTTP timeout thresholds, therefor degrading
           user experience and increase the risk of resource exhaustion. With Celery, instead of waiting for the entire processing
           to finish, the API only submits its task to a queue and immediately returns control to the user.
           Celery workers then fetch tasks from the message broker, execute them in the background,
@@ -1098,11 +1283,11 @@ structured data and perform anomaly detection with machine learning algorithm.
 
               \item Log Processing Task
 
-                    The system implementes a two-stage processing pipeline through chained Celery task.
+                    The system implements a two-stage processing pipeline through chained Celery task.
                     The first task is \texttt{preprocess\_task} which is used for log parsing and
                     transform to structured csv file. The detail steps will be described as follow.
-                    The Celery worker first retrieve the log file from MinIO object strorage and decode
-                    UTF8 centent, then invoke the Drain parser service for template extraction.
+                    The Celery worker first retrieve the log file from MinIO object storage and decode
+                    UTF8 content, then invoke the Drain parser service for template extraction.
                     The parser result is then transform into CSV format to provide human-readable
                     format and serve as a input to machine learning task. The structured CSV is
                     uploaded to other MinIO bucket and save the bucket information to database for
@@ -1122,7 +1307,7 @@ structured data and perform anomaly detection with machine learning algorithm.
 
                     This task is responsible for the second stage of the task chain, where it consume CSV
                     input, perform machine learning detection and present output. At the beginning of the
-                    task, worker retreive structured log CSV file from MinIO, the pre-trained model is
+                    task, worker retrieve structured log CSV file from MinIO, the pre-trained model is
                     then invoked for prediction. After the prediction successfully done, all the
                     important information such as total logs, anomaly count, and prediction log
                     sequences are stored in to database. Only after the analysis task complete, the
@@ -1150,7 +1335,7 @@ separates timestamps, process identifiers, log levels, components, and message c
 This structured definition ensures consistent field extraction and reduces ambiguity during parsing.
 When user invoke the the parser service with a specific
 log format, these optimized settings wil be applied automatically. In Figure \ref{fig:drain},
-the implementation will provide a contructor for \texttt{DrainParserService} with several parameters
+the implementation will provide a constructor for \texttt{DrainParserService} with several parameters
 such as similarity threshold (st), parse tree depth (depth), and maximum children per node (max\_child).
 These parameters allow control over parsing behavior which will enable user to customize as
 they wish. Overall, this approach provides an easy solution and reuseable interface for system
@@ -1159,7 +1344,7 @@ to integrate complex algorithm in anywhere.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{drain-imple.png}
+    \includegraphics[width=0.85\textwidth]{drain-imple.png}
     \caption{Drain algorithm wrapper implementation}
     \label{fig:drain}
 \end{figure}
@@ -1175,10 +1360,10 @@ to integrate complex algorithm in anywhere.
 
 The next step in the data preprocessing pipeline is feature extraction which
 transform Drain-parsed data in to numerical feature vectors. This sections
-presents the implementation of integrating loglizer library's \texttt{FeatureExtractor}
+presents the implementation of integrating Loglizer library's \texttt{FeatureExtractor}
 class to convert event sequences into  fixed-dimensional count matrices
 suitable for machine learning classification. In the proposed system, feature
-extraction is applied at two distinct phases: (1) During trainning phase, where
+extraction is applied at two distinct phases: (1) During training phase, where
 model learned and serialized for reuse, (2) during online inference, where the same
 transformation logic is applied to user lof data.
 
@@ -1186,15 +1371,15 @@ transformation logic is applied to user lof data.
 
     \item Training Phase
 
-          Firgure shows the configuration for feature extraction during the offline trainning
+          Figure \ref{fig:feature} shows the configuration for feature extraction during the offline training
           process. Parse log is first loaded using session-based windowing strategy. This
           strategy group structured log events by session identifiers and will mark
-          anomalt label at sequence level not entry level. Once the
+          anomaly label at sequence level not entry level. Once the
           sequences are prepared, \texttt{FeatureExtractor} class is invoked to convert
           event sequences into numerical feature vectors that required by machine learning
           algorithms. This transform is based of event frequency statistics, which mean that
-          whe count the occurence the number of single log event to form the event
-          count vector. Finally every count vector are formed an event count metrix $X$,
+          whe count the occurrence the number of single log event to form the event
+          count vector. Finally every count vector are formed an event count matrix $X$,
           where entry $X_{i,j}$ presents many times the event $j$ occurred in the $i$-th log sequence
           \cite{7774521}.
 
@@ -1228,7 +1413,7 @@ to find the suitable approach that have the most suitable in term of performance
 system efficiency for the project. After log parsing and event sequences construction,
 Several machine learning models were trained and evaluated on the same dataset
 to ensure fair comparison. The base code for machine learning algorithms were provided
-by Loglizer project \cite{7774521} as mentioned erlier in this study. Each algorithm is
+by Loglizer project \cite{7774521} as mentioned earlier in this study. Each algorithm is
 training with default parameters to establish baseline performance before hyperparameter
 optimization. The training pattern followed a consistent flow across all models as showing
 in Figure \ref{fig:model}.
@@ -1256,7 +1441,7 @@ analysis and retrieval.
 
 Instead of stopping at machine learning detection phase of some previous study, my system
 extends the ability to detect anomaly with Large Language Model (LLM). This approach
-will provide human-readable explainations and recommendations for marked anomalies.
+will provide human-readable explanations and recommendations for marked anomalies.
 
 
 
@@ -1287,14 +1472,14 @@ will provide human-readable explainations and recommendations for marked anomali
 
     \item Context Preparation and Session Retrieval
 
-          To effectively detect anomaly we can not just examin a single log entry, it is
+          To effectively detect anomaly we can not just examine a single log entry, it is
           depending on the surrounding logs in the same session. To create this context for
           LLM, I implement the system so that it can retrieve all log entries that
           sharing the same anomaly's BlockId from the processed CSV file. This process
-          involves four steps which is shown in Firgure \ref{fig:context}.
+          involves four steps which is shown in Figure \ref{fig:context}.
           First, the system queries the database to find the file path of
-          CSV file in MinIO. Next, the CSV is dowloaded from MinIO using chunk
-          approach to prevent unecessary memory usage. The parsed log entries are
+          CSV file in MinIO. Next, the CSV is downloaded from MinIO using chunk
+          approach to prevent unnecessary memory usage. The parsed log entries are
           then filtered to keep the one that match the target BlockId. Finally,
           the filtered logs are sorted chronologically based on their LineId to ensure
           the original execution order.
@@ -1324,7 +1509,7 @@ system prompt and user prompt.
           The system prompt defines to role and behavior of the LLM before it process tasks.
           In this project, th prompt instructs the LLM to become a expert in HDFS log analysis
           and anomaly detection. In addition, the prompt strictly enforce the output
-          format requirment for LLM to JSON format only. This approach is necessary because
+          format requirement for LLM to JSON format only. This approach is necessary because
           it will prevent other element like markdown text, emojis, or code blocks that usually
           be generated by LLMs and keep the response in consistent format for later parsing.
 
@@ -1333,7 +1518,7 @@ system prompt and user prompt.
 
           The user prompt constructs a guide for LLM to analyze the log sequences that are
           detected as anomaly. Using the context that is prepared, the prompt let the model
-          expore the all the related event to give a more concise explanations and explanations
+          explore the all the related event to give a more concise explanations and explanations
           actions.
 
 \end{enumerate}
@@ -1354,7 +1539,7 @@ using React framework which offer the ability to build a responsive and scalable
 
 \subsection{React Application Structure}
 
-The frontend of the system organizes the components by grouping them by functionality. This aproach
+The frontend of the system organizes the components by grouping them by functionality. This approach
 improves the scalability and maintainability of the code base. The primary source directory is place
 under \texttt{frontend/src/} and structured as follows.
 
@@ -1366,9 +1551,9 @@ under \texttt{frontend/src/} and structured as follows.
 \end{figure}
 
 Figure \ref{fig:frontend} shows the frontend structure of the system which provides clear
-seperation between components to make it easy to develop and maintain. For instance,
+separation between components to make it easy to develop and maintain. For instance,
 authentication-related components such as Login.tsx, Register.tsx, AuthContext.tsx
-are seperated from analysis components like LogUpload.tsx or Results.tsx. In addition,
+are separated from analysis components like LogUpload.tsx or Results.tsx. In addition,
 the frontend is developed using TypeScript XML (.tsx) in stead of JavaScript XML (.jsx)
 which provides a better static type checking and  support with better with error detection.
 
@@ -1389,10 +1574,51 @@ which provides a better static type checking and  support with better with error
           ensure only authenticated people can access to the system and perform log
           analysis tasks.
 
+          \begin{figure}[H]
+              \centering
+              \includegraphics[width=0.85\textwidth]{login-sequence.png}
+              \caption{Sequence diagram for authentication flow}
+              \label{fig:login-sequence}
+          \end{figure}
+
+          The Figure \ref{fig:login-sequence} describes the Authentication flow.
+          The process begins when the user enters their credentials (username and password)
+          into the login form of Login component and clicks "Login" button. The Login component
+          call the login(username, password) function from AuthContext. The AuthContext then
+          send POST request to the API endpoint /auth/token. The FastAPI backend verifies user
+          credentials with information that stored in database.
+          If the credentials are valid, the backend generates a JSON Web Token (JWT) and
+          return it to the API service. The AuthContext receive the JWT, stores the token
+          in client local storage. To retrieve the user’s details, AuthContext requests /auth/me with the Bearer token and
+          the backend validates the JWT and returns user details. Finally,
+          The client updates authentication state and redirects the user to the dashboard.
+
+
     \item Log Upload Component
 
           The log components provides the main interface for user to submit log files for
-          anomaly detection.
+          anomaly detection. The upload interface is implemented as a React components
+          that can handle file selection, upload progress tracking, and result viewing.
+          The component can validate file types on the client side before send to backend
+          to prevent unnecessary network traffic.
+
+          \begin{figure}[H]
+              \centering
+              \includegraphics[width=1\textwidth]{logupload-sequence.png}
+              \caption{Sequence diagram for upload log}
+              \label{fig:logupload}
+          \end{figure}
+
+          The Figure \ref{fig:logupload} describes the log upload phase.
+          The process begins when the user selects a log file and clicks the
+          upload button in the frontend Upload Component. The frontend
+          send a POST request to the backend. The backend then valid the file
+          then upload to MinIO storage. Once uploading success, the log processing
+          task is created and publishing to Redis message queue. Finally, the backend
+          returns a success response to the frontend with job ID allow user to
+          track processing status.
+
+
 
 \end{enumerate}
 
@@ -1401,17 +1627,17 @@ which provides a better static type checking and  support with better with error
 \chapter{RESULT ANALYSIS}
 
 This chapter presents a comprehensive evaluation of the proposed log anomaly detection
-system. The analysis focuses on the overall effectiveness of the machine learing models
+system. The analysis focuses on the overall effectiveness of the machine learning models
 for log anomaly detection, the overall performance of the system and the quality of
-LLM generated explainations.
+LLM generated explanations.
 
-\section{Machine learing models evaluations}
+\section{Machine learning models evaluations}
 
 To measures the performance of each model, I use  precision, recall and F-measure,
-which are the most commonly usedme trics, to evaluate the
+which are the most commonly used metrics, to evaluate the
 accuracy of anomaly detection methods as we already have
 the ground truth (anomaly or not) for the dataset. As shown below, precision
-measures the proportion of how many anomolies are correctly identified in
+measures the proportion of how many anomalies are correctly identified in
 those reported.
 
     {\large
@@ -1429,7 +1655,7 @@ those reported.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{models-score.png}
-    \caption{Trainning accuracy}
+    \caption{Training accuracy}
     \label{fig:train-accuracy}
 \end{figure}
 
@@ -1441,13 +1667,14 @@ those reported.
 \end{figure}
 
 
-Based on the experiment results that capsulates in Figure , The Decision Tree
-model demonstates that most superior performance among all approaches.
+Based on the experiment results that capsulates in Figure \ref{fig:train-accuracy} and
+Figure \ref{fig:test-accuracy},the Decision Tree
+model demonstrates that most superior performance among all approaches.
 It achieve near-perfect score for all three evaluated metrics on both training
 and testing data. SVM algorithm also perform well with F1 score approach 0.964
 but the algorithm itself is more complex and harder to understand. Unsupervised methods
 such as PCA  high precision score but low in recall, there for
-decrease its ability to dectect diverse pattern. Forest and Logistic Regression
+decrease its ability to detect diverse pattern. Forest and Logistic Regression
 provide moderate score but much lower than Decision Tree model.  As the result,
 Decision Tree model achieves the optimal accuracy and operational simplicity
 for my production log anomaly detection framework.
@@ -1458,14 +1685,85 @@ for my production log anomaly detection framework.
 The LLM is provided with session-level log sequences instead of just a single log entry.
 This context helps improving the quality of the explanations and allows models to identify
 root cause more effectively. The LLM responses have a clear consistent structure which
-contains explanations why a log sequence is lableed anomaly, root causes analysis,
-severity level and recommended actions. In most cases, the recommendations are sound realiable
-and detail enough.
+contains explanations why a log sequence is labeled anomaly, root causes analysis,
+severity level and recommended actions. In most cases, the recommendations are sound reliable
+and detail enough. Figure \ref{fig:llm-res} show an example of generated analysis from LLM.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{llm-res.png}
+    \caption{Example of a LLM response}
+    \label{fig:llm-res}
+\end{figure}
+
+
 
 \section{User Interface Effectiveness}
 
 The frontend provides a clear and linear workflow: log upload, job monitoring, result
 visualization, and anomaly explanation review.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{use-case.png}
+    \caption{Use Case Diagram - AI Log Analysis Web Application}
+    \label{fig:usecase-diagram}
+\end{figure}
+
+Figure \ref{fig:usecase-diagram} provides use cases that exist in this project.
+There are two main actors that defined in the system. Users is the primary actor
+who interact with the system to analyze log data and administrators who inherits all the
+capabilities of the standard User but also have ability to view detail of all Users
+and the system insights. Fundamental features that available to a user are register,
+login, upload log file , view job status and analyzed result.
+
+
+Some main pages of the frontend which includes both User and Admin dashboard
+will be present as follow.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{login-page.png}
+    \caption{Login page}
+    \label{fig:login-page}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{dashboard-page.png}
+    \caption{User dashboard page}
+    \label{fig:dashboard-page}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{upload-page.png}
+    \caption{Log uploading page}
+    \label{fig:upload-page}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{llm-res.png}
+    \caption{LLM responses page}
+    \label{fig:llm-response}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{user-manage.png}
+    \caption{User management admin page}
+    \label{fig:users}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{file-manage.png}
+    \caption{File management admin page}
+    \label{fig:file}
+\end{figure}
+
+
 
 \section{Limitations}
 
@@ -1513,15 +1811,69 @@ during development and evaluation.
 
 \chapter{CONCLUSION AND RECOMMENDATION}
 
+\section{Key findings}
 
+First, the Drain parsing technique proved the effectiveness in extracting HDFS raw logs into
+structured data despite variations in dynamic parameters such as IP addresses and
+block identifiers. Second, the Decision Tree classifier showed the strong performance
+in detecting anomalies with near-perfect score. Third, the integration of  large language models
+for reasoning successfully transformed classification to clear and specific explanations. However,
+the supervised learing approach in this study required labeled training data which may not
+practical when unseen or new failures arrive.
 
+\section{Recommendations for future work}
 
+There are several direction for future research that are highly recommended.
+First, extended the framework to support multiple log format instead of just for HDFS log
+in the current implementation. This would significantly improve the system flexibility.
+Secondly, in the future a other machine learning approaches will be investigated to
+address the requirements for static, pre-labeled dataset of Decision Tree algorithms.
+This limitations of the current implementation could degrade the system detecting
+performance when deploying in real-world environments.
+Finally, the current implementation will be enhanced to have to ability for
+real-time streaming and perform more automated actions rather than relying on manual
+operations.
 
+\section{Conclusion of the research}
 
-
-
+This thesis presented a comprehensive framework for anomaly detection in HDFS logs.
+The research address some fundamental challenges in automated log analysis by developing
+a system that can combines traditional approaches with modern interpretability solution.
+The proposed solution implemented a end-to-end pipeline including transform raw logs
+into structured data using Drain algorithm, then Decision Tree classifiers is utilized
+to detect anomalies in log sequences and provides it to large language models for
+explanations and mitigation recommendations generation. This implementation can bridge
+the gap between anomaly detection and operational decision making.
+While there are still some
+limitations in the research  such as the lack of
+real-time streaming capabilities, reliance on
+labeled training data, the study provides a practical and valuable foundation
+that can address challenges in automated log analysis and suggest
+solutions for continued development.
 
 
 \bibliographystyle{plain}
 \bibliography{references}
+
+\newpage
+
+\begin{center}
+    \textbf{\large{Plagiarism and AI checked}}\\[20pt]
+\end{center}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{check2.JPG}
+    % \caption{Login page}
+    % \label{fig:login-page}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{check.png.JPG}
+    % \caption{User dashboard page}
+    % \label{fig:dashboard-page}
+\end{figure}
+
+
 \end{document}
